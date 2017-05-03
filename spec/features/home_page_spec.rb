@@ -1,20 +1,34 @@
 require 'rails_helper'
 
 RSpec.feature 'home' do
-  let(:user) { create(:user) }
-  background { user.confirm }
   
-  scenario 'user not sign in' do
-    visit '/'
-    expect(page).to have_text 'TEST'
-  end
-  
-  scenario 'user sign in' do
-    visit '/users/sign_in'
+  feature 'user not sign in' do
+    scenario 'should show sign_in and sign_up' do
+      home.go
+      expect(page).to have_link 'Sign In'
+      expect(page).to have_link 'Sign Up'
+    end
     
-    fill_form(:user, { email: user.email, password: user.password } )
-    click_button 'Log in'
-    expect(page).to have_text user.email
-    expect(page).not_to have_text 'TEST'
+    scenario 'render user sign_in page' do
+      home.go
+      header.sign_in
+      expect(page).to have_text 'Log in'
+    end
   end
+  
+  
+  
+  private
+  
+    def home
+      PageObjects::Pages::Home.new
+    end
+    
+    def header
+      PageObjects::Application::Header.new
+    end
+    
+    def user_login_page
+      PageObjects::Devise::Sessions::New.new
+    end
 end

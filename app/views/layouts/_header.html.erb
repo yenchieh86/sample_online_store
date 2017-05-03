@@ -1,0 +1,41 @@
+<nav class='navbar navbar-default'>
+  <div class='container-fluid'>
+    <div class='navbar-header'>
+      <%= button_tag(type: 'button', class: 'navbar-toggle collapsed', 'data-toggle' => 'collapse', 'data-target' => '#header_nav', 'aria-expanded' => 'false') do %>
+        <%= content_tag(:span, 'Toggle navigation', class: 'sr-only') %>
+        <%= content_tag(:span, '', class: 'icon-bar') %>
+        <%= content_tag(:span, '', class: 'icon-bar') %>
+        <%= content_tag(:span, '', class: 'icon-bar') %>
+      <% end %>
+      
+      <%= link_to "Yen's Store", root_path, class: 'navbar-brand' %>
+    </div>
+
+    <div class='collapse navbar-collapse' id='header_nav'>
+      <ul class='nav navbar-nav navbar-right'>
+        <li class='dropdown'>
+          <%= link_to "Account <span class='caret'></span>".html_safe, '#', class: 'dropdown-toggle', 'data-toggle' => "dropdown", 'role' => 'button', 'aria-haspopup' => 'true', 'aria-expanded' => 'false' %>
+          <ul class='dropdown-menu'>
+            <% if current_user %>
+              <li>
+                <%= link_to 'Setting', edit_user_registration_path %>
+              </li>
+              <li role="separator" class="divider"></li>
+              <li>
+                <%= link_to 'Sign Out', destroy_user_session_path, method: :delete %>
+              </li>
+            <% else %>
+            <li>
+              <%= link_to 'Sign Up', new_user_registration_path %>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li>
+              <%= link_to 'Sign In', new_user_session_path %>
+            </li>
+            <% end %>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
