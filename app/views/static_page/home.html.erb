@@ -1,1 +1,5 @@
-<h1>TEST</h1>
+<% if current_user %>
+  <%= current_user.email %>
+<% else %>
+  <h1>TEST</h1>
+<% end %>
