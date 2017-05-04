@@ -5,8 +5,8 @@ module PageObjects
     module Registrations
       class New < Base
         
-        def sign_up(email, password, password_confirmation)
-          fill_form(:user, { email: email, password: password, password_confirmation: password_confirmation } )
+        def sign_up(username, email, password)
+          fill_form(:user, { username: username, email: email, password: password, password_confirmation: password } )
           click_button 'Sign up'
         end
         

@@ -13,6 +13,11 @@ module PageObjects
         PageObjects::Devise::Registrations::New.new
       end
       
+      def user_setup
+        account_dropdown.click_link 'Setting'
+        PageObjects::Devise::Registrations::Edit.new
+      end
+      
       private
       
         def account_dropdown
