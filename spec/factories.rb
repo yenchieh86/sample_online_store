@@ -8,4 +8,12 @@ FactoryGirl.define do
     password '111111'
     password_confirmation '111111'
   end
+  
+  sequence(:title) { |n| "Title#{n}" }
+  sequence(:description) { |n| "Description#{n}" }
+  
+  factory :category do
+    title
+    description
+  end
 end

@@ -9,6 +9,15 @@ module PageObjects
         PageObjects::Devise::Registrations::Edit.new
       end
       
+      def go
+        header.user_setup
+      end
+      
+      private
+      
+        def header
+          PageObjects::Application::Header.new
+        end
     end
   end
 end

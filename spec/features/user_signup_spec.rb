@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.feature 'User_signup' do
   scenario 'should send confirmation email after user sign_up' do
     home.go
-    expect { user_sign_up_page.sign_up 'test-user', 'test@example.com', '111111' }.to change(ActionMailer::Base.deliveries, :count).by(1)
+    expect { user_sign_up_page.sign_up 'TestUser', 'test@example.com', '111111' }.to change(ActionMailer::Base.deliveries, :count).by(1)
   end
   
   feature 'wrong informations' do

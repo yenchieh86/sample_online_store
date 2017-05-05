@@ -3,9 +3,15 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
-  
-  validates :username, presence: true, length: { minimum: 6, maximum: 20 }, uniqueness: true
+         
   before_validation { username.downcase! }
+  
+  VALID_USERNAME_REGEX = %r(\A[a-z][a-z\d]+\z)
+  validates :username, presence: true, length: { minimum: 6, maximum: 20 },
+                       format: { with: VALID_USERNAME_REGEX }, uniqueness: { case_sensitive: false }
+  
   extend FriendlyId
   friendly_id :username, use: :slugged
+  
+  enum role: [:standard, :admin]
 end
