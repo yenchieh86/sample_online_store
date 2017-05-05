@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.feature 'User_signup' do
   scenario 'should send confirmation email after user sign_up' do
     home.go
-    expect { user_sign_up_page.sign_up 'testuser', 'test@example.com', '111111' }.to change(ActionMailer::Base.deliveries, :count).by(1)
+    expect { user_sign_up_page.sign_up 'test-user', 'test@example.com', '111111' }.to change(ActionMailer::Base.deliveries, :count).by(1)
   end
   
   feature 'wrong informations' do
@@ -23,6 +23,14 @@ RSpec.feature 'User_signup' do
       home.go
       user_sign_up_page.sign_up ('a' * 21), 'test@example.com', '111111'
       expect(page).to have_text "Username is too long (maximum is 20 characters)"
+    end
+    
+    scenario "username need to be unique" do
+      home.go
+      user_sign_up_page.sign_up ('a' * 10), 'testa@example.com', '111111'
+      home.go
+      user_sign_up_page.sign_up ('a' * 10), 'testb@example.com', '111111'
+      expect(page).to have_text "Username has already been taken"
     end
     
   end

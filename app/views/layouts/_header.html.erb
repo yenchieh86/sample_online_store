@@ -18,7 +18,7 @@
           <ul class='dropdown-menu'>
             <% if current_user %>
               <li>
-                <%= link_to 'Setting', edit_user_registration_path %>
+                <%= link_to 'Setting', user_show_path(current_user) %>
               </li>
               <li role="separator" class="divider"></li>
               <li>
