@@ -19,6 +19,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'devise'
 gem "figaro"
 gem 'bootstrap-sass'
+gem 'friendly_id'
 
 group :development, :test do
   gem 'byebug', platform: :mri

@@ -43,6 +43,10 @@ RSpec.feature 'change user information' do
     end
     
     def user_setup
+      user_show_page.update_account_info
+    end
+    
+    def user_show_page
       header.user_setup
     end
 end

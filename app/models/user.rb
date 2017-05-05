@@ -6,5 +6,6 @@ class User < ApplicationRecord
   
   validates :username, presence: true, length: { minimum: 6, maximum: 20 }, uniqueness: true
   before_validation { username.downcase! }
-  
+  extend FriendlyId
+  friendly_id :username, use: :slugged
 end

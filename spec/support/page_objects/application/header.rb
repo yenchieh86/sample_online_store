@@ -15,7 +15,7 @@ module PageObjects
       
       def user_setup
         account_dropdown.click_link 'Setting'
-        PageObjects::Devise::Registrations::Edit.new
+        PageObjects::Pages::UsersShowPage.new
       end
       
       private
