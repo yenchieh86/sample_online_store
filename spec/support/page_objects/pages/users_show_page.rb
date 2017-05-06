@@ -13,6 +13,11 @@ module PageObjects
         header.user_setup
       end
       
+      def category_new_page
+        click_linl 'Add New Category'
+        PageObjects::Category::New.new
+      end
+      
       private
       
         def header

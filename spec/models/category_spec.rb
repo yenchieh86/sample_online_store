@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Category, type: :model do
-  let(:category) { create(:category) }
+  let!(:category) { build(:category) }
   
   context 'correct category info' do
     it 'should create an category' do
@@ -15,6 +15,12 @@ RSpec.describe Category, type: :model do
   end
   
   context 'wrong category info' do
+    it 'should  has unique title' do
+      category.save
+      another_category = Category.new(title: category.title, description: category.description)
+      expect(another_category).not_to be_valid
+    end
+    
     it 'should not has null title' do
       category.title = ' '
       expect(category).not_to be_valid

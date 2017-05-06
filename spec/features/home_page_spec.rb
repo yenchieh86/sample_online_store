@@ -5,8 +5,9 @@ RSpec.feature 'home' do
   feature 'user not sign in' do
     scenario 'should show sign_in and sign_up' do
       home.go
-      expect(page).to have_link 'Sign In'
-      expect(page).to have_link 'Sign Up'
+      expect(page).to have_link 'Sign In', href: new_user_session_path
+      expect(page).to have_link 'Sign Up', href: new_user_registration_path
+      expect(page).to have_link 'Category List', href: categories_path
     end
     
     scenario 'render user sign_in page' do

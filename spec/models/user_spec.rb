@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:user) { User.create(username: 'YEN' * 2, email: 'YencHIeH86@HoTmaiL.CoM', password: 'AaA' * 2, password_confirmation: 'AaA' * 2) }
+  let!(:user) { User.create(username: 'YEN' * 2, email: 'YencHIeH86@HoTmaiL.CoM', password: 'AaA' * 2, password_confirmation: 'AaA' * 2) }
   
   context 'Correct user info' do
     it 'should turn user username and email into downcase' do
@@ -22,6 +22,11 @@ RSpec.describe User, type: :model do
   end
   
   context 'wrong user info' do
+    it 'should has unique username' do
+      another_user = User.create(username: 'YEN' * 2, email: 'test@HoTmaiL.CoM', password: 'AaA' * 2, password_confirmation: 'AaA' * 2)
+      expect(another_user).not_to be_valid
+    end
+    
     it 'should not have space in username format' do
       user.username = '  ' + 'a' * 6
       expect(user).not_to be_valid
