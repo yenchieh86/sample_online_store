@@ -13,7 +13,7 @@ RSpec.describe 'Routing' do
     end
     
     it 'routes user_show to users#show' do
-      expect(get: "/users/show/cj4930").to route_to(controller: 'users', action: 'show', id: 'cj4930')
+      expect(get: "/user/show/cj4930").to route_to(controller: 'users', action: 'show', id: 'cj4930')
     end
   end
 end

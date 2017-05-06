@@ -16,6 +16,11 @@ RSpec.describe UsersController do
       get :show, params: { id: standard_user.username }
       expect(response).to redirect_to(new_user_session_url)
     end
+    
+    it "can't access to users#list page" do
+      get :list
+      expect(response).to redirect_to(root_url)
+    end
   end
   
   describe 'standard_user' do
@@ -23,6 +28,41 @@ RSpec.describe UsersController do
       sign_in standard_user
       get :show, params: { id: admin.username }
       expect(assigns(:user)).to eq standard_user
+    end
+    
+    it 'can access to his own users#show page' do
+      sign_in standard_user
+      get :show, params: { id: standard_user.username }
+      expect(assigns(:user)).to eq standard_user
+    end
+    
+    it "can't access to users#list page" do
+      sign_in standard_user
+      get :list
+      expect(response).to redirect_to(root_url)
+    end
+  end
+  
+  describe 'admin' do
+    it "can access other user's account information" do
+      sign_in admin
+      get :show, params: { id: standard_user.username }
+      expect(assigns(:user)).to eq standard_user
+    end
+    
+    it 'can access to his own user_show page' do
+      sign_in admin
+      get :show, params: { id: admin.username }
+      expect(assigns(:user)).to eq admin
+    end
+    
+    it "can access to users#list page" do
+      user1 = create(:user)
+      user2 = create(:user)
+      sign_in admin
+      get :list
+      expect(response).to have_http_status(:success)
+      expect(assigns(:users)).to eq User.all
     end
   end
   

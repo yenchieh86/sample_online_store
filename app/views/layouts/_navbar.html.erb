@@ -1,0 +1,33 @@
+<nav class='navbar navbar-default navbar_list'>
+  <div class='container-fluid'>
+    <div class='navbar-header'>
+      <%= button_tag(type: 'button', class: 'navbar-toggle collapsed', 'data-toggle' => 'collapse', 'data-target' => '#navbar_list', 'aria-expanded' => 'false') do %>
+        <%= content_tag(:span, 'Toggle navigation', class: 'sr-only') %>
+        <%= content_tag(:span, '', class: 'icon-bar') %>
+        <%= content_tag(:span, '', class: 'icon-bar') %>
+        <%= content_tag(:span, '', class: 'icon-bar') %>
+      <% end %>
+    </div>
+    <div class='collapse navbar-collapse' id='navbar_list'>
+      <ul class='nav navbar-nav navbar-left'>
+        <li class='dropdown'>
+          <%= link_to "Category List", '#', class: 'dropdown-toggle', 'data-toggle' => "dropdown", 'role' => 'button', 'aria-haspopup' => 'true', 'aria-expanded' => 'false' %>
+          <ul class='dropdown-menu'>
+            <% navbar_category_list.each_with_index do |category, index| %>
+              <% if index == 0 %>
+                <li>
+                  <%= link_to category.title, category_path(category) %>
+                </li>
+              <% else %>
+                <li role="separator" class="divider"></li>
+                <li>
+                  <%= link_to category.title, category_path(category) %>
+                </li>
+              <% end %>
+            <% end %>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

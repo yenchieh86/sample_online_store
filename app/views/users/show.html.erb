@@ -7,4 +7,6 @@
 <br />
 <% if current_user.role == 'admin' %>
   <%= link_to 'Add New Category', new_category_path %>
+  <br />
+  <%= link_to 'User List', user_list_path %>
 <% end %>
