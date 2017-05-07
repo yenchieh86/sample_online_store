@@ -12,10 +12,25 @@ class UsersController < ApplicationController
   end
   
   def list
-    if current_user == nil || !current_user.admin?
+    if current_user == nil || current_user.standard?
       redirect_to root_url
     else
       @users = User.all
+    end
+  end
+  
+  def erase
+    if current_user != nil && current_user.admin?
+      @user = User.friendly.find(params[:id])
+      if @user.destroy
+        flash[:success] = 'You just delete an user.'
+        redirect_to user_list_url
+      else
+        flash.now[:alert] = @user.errors.full_messages
+        render :list
+      end
+    else
+      redirect_to root_url
     end
   end
   

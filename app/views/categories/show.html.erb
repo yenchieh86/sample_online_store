@@ -1,2 +1,9 @@
-<h1>Categories#show</h1>
-<p>Find me in app/views/categories/show.html.erb</p>
+<h1>This is <%= @category.title %>'s page</h1>
+
+<% if current_user != nil && current_user.admin? %>
+  <%= link_to 'Add New Item', '#' %>
+  <br />
+  <%= link_to 'Edit Category Setting', edit_category_path(@category) %>
+  <br />
+  <%= link_to 'Delete This Category', category_path(@category), method: :delete %>
+<% end %>

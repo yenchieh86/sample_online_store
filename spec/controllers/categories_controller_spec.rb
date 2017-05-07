@@ -23,6 +23,15 @@ RSpec.describe CategoriesController, type: :controller do
       end
     end
     
+    describe "GET #show" do
+      it "returns http success" do
+        category1 = create(:category)
+        get :show, params: { id: category1.reload.id, category: { title: category1.title, description: category1.description } }
+        expect(response).to have_http_status(:success)
+        expect(assigns(:category)).to eq category1
+      end
+    end
+    
     describe "GET #new" do
       it 'should redirect_to root_url' do
         get :new
@@ -68,6 +77,15 @@ RSpec.describe CategoriesController, type: :controller do
         category2 = create(:category)
         get :index
         expect(assigns(:categories)).to eq [category1, category2]
+      end
+    end
+    
+    describe "GET #show" do
+      it "returns http success" do
+        category1 = create(:category)
+        get :show, params: { id: category1.reload.id, category: { title: category1.title, description: category1.description } }
+        expect(response).to have_http_status(:success)
+        expect(assigns(:category)).to eq category1
       end
     end
     

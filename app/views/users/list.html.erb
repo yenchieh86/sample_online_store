@@ -1,1 +1,22 @@
 <h1>This is User List Page</h1>
+<table>
+  <tr>
+    <th>No.</th>
+    <th>Username</th>
+    <th>Setting</th>
+  </tr>
+  <% @users.each_with_index do |user, index| %>
+    <tr>
+      <th>
+        <%= index + 1 %>
+      </th>
+      <th>
+        <%= link_to user.username, user_show_path(user) %>
+      </th>
+      <th>
+        <%= link_to 'edit', '#' %>
+        <%= link_to 'Delete', erase_user_path(user), method: :delete %>
+      </th>
+    </tr>
+  <% end %>
+</table>
