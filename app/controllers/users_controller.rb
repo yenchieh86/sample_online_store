@@ -12,10 +12,10 @@ class UsersController < ApplicationController
   end
   
   def list
-    if current_user == nil || current_user.standard?
-      redirect_to root_url
-    else
+    if current_user && current_user.role == 'admin'
       @users = User.all
+    else
+      redirect_to root_url
     end
   end
   

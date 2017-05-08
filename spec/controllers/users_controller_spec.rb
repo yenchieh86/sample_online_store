@@ -88,21 +88,3 @@ RSpec.describe UsersController do
   
 
 end
-
-=begin
-
-
-      it "deletes a record" do
-        course = create(:course, user: author)
-        
-        expect { delete :destroy, params: { id: course.id } }.to change { Course.count }.by(-1)
-      end
-      
-      it "redirectes to courses_path" do
-        course = create(:course, user: author)
-        
-        delete :destroy, params: { id: course.id }
-        
-        expect(response).to redirect_to courses_path
-      end
-=end

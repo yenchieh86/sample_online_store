@@ -26,7 +26,7 @@ RSpec.describe CategoriesController, type: :controller do
     describe "GET #show" do
       it "returns http success" do
         category1 = create(:category)
-        get :show, params: { id: category1.reload.id, category: { title: category1.title, description: category1.description } }
+        get :show, params: { id: category1.reload.id }
         expect(response).to have_http_status(:success)
         expect(assigns(:category)).to eq category1
       end
@@ -51,6 +51,22 @@ RSpec.describe CategoriesController, type: :controller do
       end
     end
     
+    describe "GET #edit" do
+      it "returns to root_url" do
+        category1 = create(:category)
+        get :edit, params: { id: category1.reload.id }
+        expect(response).to redirect_to root_url
+      end
+    end
+    
+    describe "GET #update" do
+      it "returns to root_url" do
+        category1 = create(:category)
+        patch :update, params: { id: category1.reload.id, category: { title: 'Test', description: 'Description' } }
+        expect(assigns(:category)).to be_nil
+        expect(response).to redirect_to root_url
+      end
+    end
   end
   
   describe 'standard_user' do
@@ -83,7 +99,7 @@ RSpec.describe CategoriesController, type: :controller do
     describe "GET #show" do
       it "returns http success" do
         category1 = create(:category)
-        get :show, params: { id: category1.reload.id, category: { title: category1.title, description: category1.description } }
+        get :show, params: { id: category1.reload.id }
         expect(response).to have_http_status(:success)
         expect(assigns(:category)).to eq category1
       end
@@ -108,6 +124,22 @@ RSpec.describe CategoriesController, type: :controller do
       end
     end
     
+    describe "GET #edit" do
+      it "returns to root_url" do
+        category1 = create(:category)
+        get :edit, params: { id: category1.reload.id }
+        expect(response).to redirect_to root_url
+      end
+    end
+    
+    describe "GET #update" do
+      it "returns to root_url" do
+        category1 = create(:category)
+        patch :update, params: { id: category1.reload.id, category: { title: 'Test', description: 'Description' } }
+        expect(assigns(:category)).to be_nil
+        expect(response).to redirect_to root_url
+      end
+    end
     
   end
   
@@ -158,9 +190,27 @@ RSpec.describe CategoriesController, type: :controller do
         expect(response).to redirect_to(categories_url)
       end
     end
+    
+    describe "GET #edit" do
+      it "returns to root_url" do
+        category1 = create(:category)
+        get :edit, params: { id: category1.reload.id }
+        expect(response).to have_http_status(:success)
+        expect(assigns(:category)).to eq category1
+      end
+    end
+    
+    describe "GET #update" do
+      it "should update the category and returns to root_url" do
+        category1 = create(:category)
+        patch :update, params: { id: category1.reload.id, category: { title: 'Test', description: 'Description' } }
+        expect(assigns(:category).title).to eq 'Test'
+        expect(assigns(:category).description).to eq 'Description'
+        expect(response).to redirect_to categories_url
+      end
+    end
   end
-  
- 
+end
   
   
   
@@ -182,4 +232,4 @@ RSpec.describe CategoriesController, type: :controller do
 =end
 
   
-end
+

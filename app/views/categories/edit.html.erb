@@ -1,2 +1,6 @@
-<h1>Categories#edit</h1>
-<p>Find me in app/views/categories/edit.html.erb</p>
+<h1><%= @category.title %>'s Edit Page</h1>
+<%= bootstrap_form_for(@category) do |f| %>
+  <%= f.text_field :title %>
+  <%= f.text_area :description %>
+  <%= f.submit "Save" %>
+<% end %>

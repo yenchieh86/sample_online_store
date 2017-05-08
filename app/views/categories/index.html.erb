@@ -19,7 +19,7 @@
         <%= link_to "#{category.items_count} items", '#' %>
       </th>
       <th>
-        <%= link_to 'edit', '#' %>
+        <%= link_to 'edit', edit_category_path(category) %>
         <%= link_to 'Delete', category_path(category), method: :delete %>
       </th>
     </tr>
