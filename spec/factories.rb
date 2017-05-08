@@ -22,6 +22,7 @@ FactoryGirl.define do
   sequence(:item_description) { |n| "ItemDescription#{n}" }
   
   factory :item do
+    
     title { generate(:item_title) }
     description { generate(:item_description) }
     price "0.00"

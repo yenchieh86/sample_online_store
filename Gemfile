@@ -21,6 +21,7 @@ gem "figaro"
 gem 'bootstrap-sass'
 gem 'friendly_id'
 gem 'bootstrap_form'
+gem 'faker'
 
 group :development, :test do
   gem 'byebug', platform: :mri
