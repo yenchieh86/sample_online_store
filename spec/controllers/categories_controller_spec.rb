@@ -209,6 +209,23 @@ RSpec.describe CategoriesController, type: :controller do
         expect(response).to redirect_to categories_url
       end
     end
+    
+    describe "GET #destroy" do
+      let!(:category) { create(:category) }
+      let!(:item) { build(:item) }
+      before do
+        item.user_id = admin.reload.id
+        item.category_id = category.reload.id
+        item.save
+      end
+      
+      it "should change items to backup category" do
+        delete :destroy, params: { id: category.reload.id }
+        expect(item.reload.category.title).to eq "Backup"
+        backup_category = Category.where(title: 'Backup').first
+        expect(backup_category.items_count).to eq 1
+      end
+    end
   end
 end
   

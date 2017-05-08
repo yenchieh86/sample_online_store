@@ -43,6 +43,24 @@ class CategoriesController < ApplicationController
   end
   
   def destroy
+    category = Category.find(params[:id])
+    items = category.items
+    backup_category = Category.where(title: 'Backup').first || Category.create(title: 'Backup', description: 'This category is for backup')
+    
+    items.each do |item|
+      item.update_attributes(category_id: backup_category.id)
+    end
+    
+    if category.destroy
+      redirect_to root_url
+    else
+      items.each do |item|
+        item.update_attributes(category_id: backup_category.id)
+      end
+      flash.now[:alert] = 'Someting is wrong.'
+      render categories_url
+    end
+    
   end
   
   private
