@@ -12,6 +12,11 @@ admin_2 = User.new(username: ENV["ADMIN_2_USERNAME"], email: ENV["ADMIN_2_EMAIL"
 admin_2.skip_confirmation!
 admin_2.save
 
+backup_user = User.new(username: ENV["BACKUP_USERNAME"], email: ENV["BACKUP_EMAIL"], password: ENV["BACKUP_PASSWORD"],
+                   password_confirmation: ENV["BACKUP_PASSWORD"], role: 'admin')
+backup_user.skip_confirmation!
+backup_user.save
+
 10.times do |n|
   u = User.new(username: "testuser#{n}", email: "user#{n}@test.com", password: '111111',
                password_confirmation: '111111')

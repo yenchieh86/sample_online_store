@@ -10,6 +10,10 @@ module PageObjects
           click_button "Update"
         end
         
+        def delete_account
+          click_button 'Cancel my account'
+        end
+        
       end
     end
   end
