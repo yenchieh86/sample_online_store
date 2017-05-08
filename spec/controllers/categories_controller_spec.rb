@@ -70,7 +70,7 @@ RSpec.describe CategoriesController, type: :controller do
   end
   
   describe 'standard_user' do
-    let(:standard_user) { create(:user) }
+    let!(:standard_user) { build(:user) }
     before do
       standard_user.skip_confirmation!
       standard_user.save
@@ -144,7 +144,7 @@ RSpec.describe CategoriesController, type: :controller do
   end
   
   describe 'admin' do
-    let(:admin) { create(:user) }
+    let!(:admin) { build(:user) }
     before do
       admin.role = 'admin'
       admin.skip_confirmation!

@@ -1,4 +1,50 @@
 <h1>This is <%= @category.title %>'s page</h1>
+<% if @items.size > 0 %>
+  <table>
+    <tr>
+      <th>No.</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>stock</th>
+      <th>price</th>
+      <th>status</th>
+      <th>sold</th>
+    </tr>
+    <% @items.each_with_index do |item, index| %>
+      <tr>
+        <th>
+          <%= index + 1 %>
+        </th>
+        <th>
+          <%= link_to item.title, category_item_path(@category,item) %>
+        </th>
+        <th>
+          <p><%= item.description %></p>
+        </th>
+        <th>
+          <p><%= item.stock %></p>
+        </th>
+        <th>
+          <p><%= item.price %></p>
+        </th>
+        <th>
+          <p><%= item.status %></p>
+        </th>
+        <th>
+          <%= link_to item.sold, '#' %>
+        </th>
+        <th>
+          <%= link_to 'edit', edit_category_item_path(@category, item) %>
+          <%= link_to 'Delete', category_item_path(@category, item), method: :delete %>
+        </th>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <h3>There's no item in this category.</h3>
+<% end %>
+
+
 
 <% if current_user != nil && current_user.admin? %>
   <%= link_to 'Add New Item', '#' %>
