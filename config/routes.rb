@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   delete 'user/erase/:id', to: 'users#erase', as: 'erase_user'
   
   devise_for :users
-  resources 'categories'
+  resources 'categories' do
+    resources 'items'
+  end
   root 'static_page#home'
 end

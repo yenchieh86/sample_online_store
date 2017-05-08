@@ -1,5 +1,6 @@
-class Category < ApplicationRecord
-  has_many :items
+class Item < ApplicationRecord
+  belongs_to :user, counter_cache: true
+  belongs_to :category, counter_cache: true
   
   before_validation { title.capitalize! }
   
@@ -7,4 +8,6 @@ class Category < ApplicationRecord
   validates :title, presence: true, length: { minimum: 1, maximum: 225 }, uniqueness: { case_sensitive: false },
                     format: { with: VALID_TITLE_REGEX }
   validates :description, presence: true, length: { minimum: 1 }
+  
+  enum status: [:off_shelf, :on_shelf]
 end
