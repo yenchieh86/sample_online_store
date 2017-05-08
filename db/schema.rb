@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170508060502) do
+ActiveRecord::Schema.define(version: 20170508230146) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 20170508060502) do
     t.integer  "items_count", default: 0
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.string   "slug"
+    t.index ["slug"], name: "index_categories_on_slug", unique: true, using: :btree
     t.index ["title"], name: "index_categories_on_title", unique: true, using: :btree
   end
 
@@ -51,7 +53,9 @@ ActiveRecord::Schema.define(version: 20170508060502) do
     t.integer  "status",                              default: 0,     null: false
     t.datetime "created_at",                                          null: false
     t.datetime "updated_at",                                          null: false
+    t.string   "slug"
     t.index ["category_id"], name: "index_items_on_category_id", using: :btree
+    t.index ["slug"], name: "index_items_on_slug", unique: true, using: :btree
     t.index ["status"], name: "index_items_on_status", using: :btree
     t.index ["title"], name: "index_items_on_title", unique: true, using: :btree
     t.index ["user_id"], name: "index_items_on_user_id", using: :btree

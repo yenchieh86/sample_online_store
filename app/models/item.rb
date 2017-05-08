@@ -9,5 +9,8 @@ class Item < ApplicationRecord
                     format: { with: VALID_TITLE_REGEX }
   validates :description, presence: true, length: { minimum: 1 }
   
+  extend FriendlyId
+  friendly_id :title, use: :slugged
+  
   enum status: [:off_shelf, :on_shelf]
 end
