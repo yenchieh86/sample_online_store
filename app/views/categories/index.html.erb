@@ -1,2 +1,27 @@
 <h1>Categories#index</h1>
 <h3>No. of category: <%= Category.count %></h3>
+<table>
+  <tr>
+    <th>No.</th>
+    <th>Title</th>
+    <th>No. of Items</th>
+    <th>Setting</th>
+  </tr>
+  <% @categories.each_with_index do |category, index| %>
+    <tr>
+      <th>
+        <%= index + 1 %>
+      </th>
+      <th>
+        <%= link_to category.title, category_path(category) %>
+      </th>
+      <th>
+        <%= link_to "#{category.items_count} items", '#' %>
+      </th>
+      <th>
+        <%= link_to 'edit', '#' %>
+        <%= link_to 'Delete', category_path(category), method: :delete %>
+      </th>
+    </tr>
+  <% end %>
+</table>
