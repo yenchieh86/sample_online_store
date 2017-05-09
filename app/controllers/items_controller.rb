@@ -5,6 +5,7 @@ class ItemsController < ApplicationController
   end
 
   def show
+    @item = Item.friendly.find(params[:id])
   end
 
   def new

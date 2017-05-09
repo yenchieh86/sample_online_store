@@ -1,2 +1,31 @@
-<h1>Items#show</h1>
-<p>Find me in app/views/items/show.html.erb</p>
+<h1>This is <%= @item.title %>'s show page</h1>
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Description</th>
+    <th>stock</th>
+    <th>price</th>
+    <th>status</th>
+    <th>sold</th>
+  </tr>
+  <tr>
+    <th>
+      <p><%= @item.title %></p>
+    </th>
+    <th>
+      <p><%= @item.description %></p>
+    </th>
+    <th>
+      <p><%= @item.stock %></p>
+    </th>
+    <th>
+      <p><%= @item.price %></p>
+    </th>
+    <th>
+      <p><%= @item.status %></p>
+    </th>
+    <th>
+      <p><%= link_to @item.sold, '#' %></p>
+    </th>
+  </tr>
+</table>
