@@ -13,10 +13,10 @@
         <%= index + 1 %>
       </th>
       <th>
-        <%= link_to category.title, category_path(category) %>
+        <p><%= category.title %></p>
       </th>
       <th>
-        <%= link_to "#{category.items_count} items", '#' %>
+        <%= link_to "#{category.items_count} items", category_path(category) %>
       </th>
       <th>
         <%= link_to 'edit', edit_category_path(category) %>

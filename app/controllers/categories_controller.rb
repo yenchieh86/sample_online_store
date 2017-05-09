@@ -27,11 +27,11 @@ class CategoriesController < ApplicationController
   end
 
   def edit
-    @category = Category.find(params[:id])
+    @category = Category.friendly.find(params[:id])
   end
   
   def update
-    @category = Category.find(params[:id])
+    @category = Category.friendly.find(params[:id])
     
     if @category.update_attributes(category_params)
       flash[:success] = "You update the #{@category.title}'s information."
@@ -43,7 +43,7 @@ class CategoriesController < ApplicationController
   end
   
   def destroy
-    category = Category.find(params[:id])
+    category = Category.friendly.find(params[:id])
     items = category.items
     backup_category = Category.where(title: 'Backup').first || Category.create(title: 'Backup', description: 'This category is for backup')
     

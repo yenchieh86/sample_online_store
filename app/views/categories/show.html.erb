@@ -1,4 +1,6 @@
 <h1>This is <%= @category.title %>'s page</h1>
+<p><strong>Description: </strong><%= @category.description %></p>
+<p><strong>Number of items: </strong><%= @category.items_count %></p>
 <% if @items.size > 0 %>
   <table>
     <tr>
@@ -34,8 +36,8 @@
           <%= link_to item.sold, '#' %>
         </th>
         <th>
-          <%= link_to 'edit', edit_category_item_path(@category, item) %>
-          <%= link_to 'Delete', category_item_path(@category, item), method: :delete %>
+          <%= link_to 'edit', edit_item_path(item) %>
+          <%= link_to 'Delete', item_path(item), method: :delete %>
         </th>
       </tr>
     <% end %>
@@ -47,7 +49,6 @@
 
 
 <% if current_user != nil && current_user.admin? %>
-  <%= link_to 'Add New Item', '#' %>
   <br />
   <%= link_to 'Edit Category Setting', edit_category_path(@category) %>
   <br />

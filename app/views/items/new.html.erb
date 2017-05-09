@@ -1,2 +1,19 @@
-<h1>Items#new</h1>
-<p>Find me in app/views/items/new.html.erb</p>
+<h1>Create New Item</h1>
+<%= bootstrap_form_for(@item) do |f| %>
+  <%= f.select :category_id, @category_list, { label: "Category" }, { class: "selectpicker" } %>
+  <%= f.text_field :title %>
+  <%= f.text_area :description %>
+  <%= f.number_field :stock %>
+  <%= f.number_field :price, step: 0.01 %>
+  <%= f.number_field :weight, step: 0.01 %>
+  <%= f.number_field :length, step: 0.01 %>
+  <%= f.number_field :width, step: 0.01 %>
+  <%= f.number_field :height, step: 0.01 %>
+  <%= f.form_group :status, label: { text: "Status" } do %>
+  <%= f.radio_button :status, 'off_shelf', label: "Off Shelf", inline: true %>
+    <%= f.radio_button :status, 'on_shelf', label: "On Shelf", inline: true %>
+  <% end %>
+  <%= f.submit "Save" %>
+<% end %>
+
+
