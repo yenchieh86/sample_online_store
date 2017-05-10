@@ -1,0 +1,15 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+/* for 'layouts/navbar' */
+
+.navbar_list {
+  margin-top: -21px;
+  .navbar-toggle {
+    float: left;
+    margin-left: 15px;
+  }
+  .navbar-left {
+    margin-left: -15px;
+  }
+}

@@ -10,20 +10,8 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
+ *= require_tree .
+ *= require_self
  *= require rails_bootstrap_forms
  */
 
-@import "bootstrap-sprockets";
-@import "bootstrap";
-
-.navbar_list {
-  margin-top: -21px;
-  .navbar-toggle {
-    float: left;
-    margin-left: 15px;
-  }
-  .navbar-left {
-    margin-left: -15px;
-  }
-  
-}
