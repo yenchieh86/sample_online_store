@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170509201737) do
+ActiveRecord::Schema.define(version: 20170510082237) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,48 @@ ActiveRecord::Schema.define(version: 20170509201737) do
     t.index ["user_id"], name: "index_items_on_user_id", using: :btree
   end
 
+  create_table "order_items", force: :cascade do |t|
+    t.integer  "order_id"
+    t.integer  "item_id"
+    t.integer  "quantity",                             default: 0
+    t.decimal  "total_weight", precision: 7, scale: 2, default: "0.0"
+    t.decimal  "total_volume", precision: 7, scale: 2, default: "0.0"
+    t.integer  "status",                               default: 0
+    t.decimal  "total_amount", precision: 7, scale: 2, default: "0.0"
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
+    t.index ["item_id"], name: "index_order_items_on_item_id", using: :btree
+    t.index ["order_id"], name: "index_order_items_on_order_id", using: :btree
+    t.index ["status"], name: "index_order_items_on_status", using: :btree
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "status",                                     default: 0
+    t.integer  "order_items_count",                          default: 0
+    t.decimal  "shipping",           precision: 7, scale: 2, default: "0.0"
+    t.decimal  "total_weight",       precision: 7, scale: 2, default: "0.0"
+    t.decimal  "total_volume",       precision: 7, scale: 2, default: "0.0"
+    t.decimal  "tax",                precision: 7, scale: 2, default: "0.0"
+    t.decimal  "order_items_total",  precision: 7, scale: 2, default: "0.0"
+    t.decimal  "order_total_amount", precision: 7, scale: 2, default: "0.0"
+    t.datetime "created_at",                                                 null: false
+    t.datetime "updated_at",                                                 null: false
+    t.index ["status"], name: "index_orders_on_status", using: :btree
+    t.index ["user_id"], name: "index_orders_on_user_id", using: :btree
+  end
+
+  create_table "store_activities", force: :cascade do |t|
+    t.integer  "total_users",                                  default: 0
+    t.integer  "total_categories",                             default: 0
+    t.integer  "total_items",                                  default: 0
+    t.integer  "total_orders",                                 default: 0
+    t.integer  "total_finished_order",                         default: 0
+    t.decimal  "total_sales",          precision: 7, scale: 2, default: "0.0"
+    t.datetime "created_at",                                                   null: false
+    t.datetime "updated_at",                                                   null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -92,4 +134,7 @@ ActiveRecord::Schema.define(version: 20170509201737) do
 
   add_foreign_key "items", "categories"
   add_foreign_key "items", "users"
+  add_foreign_key "order_items", "items"
+  add_foreign_key "order_items", "orders"
+  add_foreign_key "orders", "users"
 end

@@ -1,0 +1,2 @@
+class StoreActivity < ApplicationRecord
+end
