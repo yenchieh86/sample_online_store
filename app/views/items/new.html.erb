@@ -1,5 +1,5 @@
 <h1>Create New Item</h1>
-<%= bootstrap_form_for(@item) do |f| %>
+<%= bootstrap_form_for(@item, html: { multipart: true }) do |f| %>
   <%= f.select :category_id, @category_list, { label: "Category" }, { class: "selectpicker" } %>
   <%= f.text_field :title %>
   <%= f.text_area :description %>
@@ -9,6 +9,9 @@
   <%= f.number_field :length, step: 0.01 %>
   <%= f.number_field :width, step: 0.01 %>
   <%= f.number_field :height, step: 0.01 %>
+  <%= f.file_field :pictures, multiple: true, accept: "image/jpeg, image/jpg, image/gif, image/png" %>
+  <%= f.file_field :pictures, multiple: true, accept: "image/jpeg, image/jpg, image/gif, image/png" %>
+  <%= f.file_field :pictures, multiple: true, accept: "image/jpeg, image/jpg, image/gif, image/png" %>
   <%= f.form_group :status, label: { text: "Status" } do %>
   <%= f.radio_button :status, 'off_shelf', label: "Off Shelf", inline: true %>
     <%= f.radio_button :status, 'on_shelf', label: "On Shelf", inline: true %>
@@ -16,4 +19,13 @@
   <%= f.submit "Save" %>
 <% end %>
 
+
+<script type='text/javascript'>
+  $('#item_pictures').bind('change', function(){
+    var size_in_kilobyte = this.files[0].size/1024;
+    if (size_in_kilobyte > 120) {
+      alert("Image file can't be larger than 120KB.");
+    }
+  });
+</script>
 

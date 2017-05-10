@@ -22,6 +22,10 @@ gem 'bootstrap-sass'
 gem 'friendly_id'
 gem 'bootstrap_form'
 gem 'faker'
+gem 'carrierwave'
+gem 'mini_magick'
+gem 'fog'
+
 
 group :development, :test do
   gem 'byebug', platform: :mri

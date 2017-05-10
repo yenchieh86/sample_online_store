@@ -1,4 +1,12 @@
 <h1>This is <%= @item.title %>'s show page</h1>
+<% if @item.pictures.any? %>
+  <% @item.pictures.each do |pic| %>
+    <%= image_tag pic.url %>
+  <% end %>
+<% end %>
+
+<%= @item.id %>
+
 <table>
   <tr>
     <th>Title</th>

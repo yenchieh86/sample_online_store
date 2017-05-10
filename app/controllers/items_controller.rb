@@ -26,6 +26,11 @@ class ItemsController < ApplicationController
       flash[:success] = 'The item was created.'
       redirect_to user_show_url(current_user)
     else
+      categories = Category.all 
+      @category_list = Array.new
+      categories.each do |category|
+        @category_list.push([category.title, category.id])
+      end
       flash.now[:alert] = @item.errors.full_messages
       render :new
     end
@@ -55,6 +60,11 @@ class ItemsController < ApplicationController
         redirect_to root_url
       else
         flash.now[:alert] = @item.errors.full_messages
+        categories = Category.all 
+        @category_list = Array.new
+        categories.each do |category|
+          @category_list.push([category.title, category.id])
+        end
         render :edit
       end
     else
@@ -83,7 +93,9 @@ class ItemsController < ApplicationController
   private
   
     def item_params
-      params.require(:item).permit(:title, :description, :price, :stock, :weight, :length, :width, :height, :category_id, :status)
+      params.require(:item).permit(:title, :description, :price, :stock,
+                                   :weight, :length, :width, :height,
+                                   :category_id, :status, pictures: [])
     end
     
     def check_admin!
