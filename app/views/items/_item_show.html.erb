@@ -1,0 +1,10 @@
+<div class='col-md-2 items_list'>
+  <span class='col-md-12 text-center'>
+    <% if item.pictures.any? %>
+      <%= link_to image_tag(item.pictures[0].url, size: "120x120"), category_item_path(category, item) %>
+    <% else %>
+      <%= link_to image_tag('no_uploaded.png', size: "120x120"), category_item_path(category, item) %>
+    <% end %>
+    <%= link_to item.title, category_item_path(category, item) %>
+  </span>
+</div>

@@ -6,8 +6,7 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    @category = Category.friendly.find(params[:id])
-    @items = Item.where(category_id: @category.id)
+    @category = Category.includes(:items).friendly.find(params[:id])
   end
 
   def new

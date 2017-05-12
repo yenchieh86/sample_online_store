@@ -1,39 +1,35 @@
-<h1>This is <%= @item.title %>'s show page</h1>
-<% if @item.pictures.any? %>
-  <% @item.pictures.each do |pic| %>
-    <%= image_tag pic.url %>
-  <% end %>
-<% end %>
-
-<%= @item.id %>
-
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Description</th>
-    <th>stock</th>
-    <th>price</th>
-    <th>status</th>
-    <th>sold</th>
-  </tr>
-  <tr>
-    <th>
-      <p><%= @item.title %></p>
-    </th>
-    <th>
-      <p><%= @item.description %></p>
-    </th>
-    <th>
-      <p><%= @item.stock %></p>
-    </th>
-    <th>
-      <p><%= @item.price %></p>
-    </th>
-    <th>
-      <p><%= @item.status %></p>
-    </th>
-    <th>
-      <p><%= link_to @item.sold, '#' %></p>
-    </th>
-  </tr>
-</table>
+<div class='item_show'>
+  <div class='row'>
+    <div class='col-md-12 item_title'>
+      <h2><%= @item.title.capitalize %></h2>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col-md-5'>
+      <div class='row'>
+        <div class='col-md-12'>
+          <% if !@item.pictures[0].nil? %>
+            <%= image_tag(@item.pictures[0].url, size: '500x500', class: 'img-responsive center-block') %>
+          <% else %>
+            <%= image_tag('no_uploaded.png', size: '500x500', class: 'img-responsive center-block') %>
+          <% end %>
+        </div>
+      </div>
+      <div class='row text-center small_image_area'>
+        <% for n in 0..2 %>
+          <%= render 'items/item_small_image', n: n %>
+        <% end %>
+      </div>
+    </div>
+    <div class='col-md-7'>
+      <h4><strong>Category: </strong><%= @item.category.title %></h4>
+      <h4><strong>Price: </strong>$<%= @item.price %></h4>
+      <h4><strong>Stock: </strong><%= in_stock?(@item) %></h4>
+      <h4><strong>Weight: </strong><%= @item.weight %></h4>
+      <h4><strong>Dimensions: </strong><%= @item.length %> x <%= @item.width %> x <%= @item.height %></h4>
+      <h4>###Link for buy</h4>
+      <h4><strong>Description: </strong></h4>
+      <h5><%= @item.description %></h5>
+    </div>
+  </div>
+</div>

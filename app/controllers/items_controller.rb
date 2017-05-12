@@ -5,7 +5,7 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.friendly.find(params[:id])
+    @item = Item.includes(:category).friendly.find(params[:id])
   end
 
   def new

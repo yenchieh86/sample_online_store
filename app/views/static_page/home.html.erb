@@ -1,7 +1,28 @@
-<% if current_user %>
-  <%= current_user.username %>
-<% else %>
-  <h1>TEST</h1>
-<% end %>
-<br />
-<%= link_to 'Category List', categories_path %>
+<div class='home_page'>
+  <div class='row'>
+    <div class='col-md-12 text-center'>
+      <%if current_user %>
+        <h3>Hi <%= current_user.username.capitalize %>, nice to see you again!</h3>
+      <% else %>
+        <h1>Welcome to Yen's Shop</h1>
+      <% end %>
+    </div>
+  </div>
+  <% if @categories.any? %>
+    <% @categories.each do |category| %>
+      <div class='row category_title text-center'>
+        <h4>category.title</h4>
+      </div>
+      <div class='row home_category_list text-center' >
+        <% category.items.take(6).each do |item| %>
+          <%= render 'items/item_show', item: item, category: category %>
+        <% end %>
+        <div class='row'>
+          <div class='col-md-12 text-right'>
+            <%= link_to 'more', category_path(category), class: "btn btn-default btn-xs" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>

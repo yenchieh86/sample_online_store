@@ -1,0 +1,7 @@
+<span class='col-md-4'>
+  <% if !@item.pictures[n].nil? %>
+    <%= image_tag(@item.pictures[n].url, size: '140x140', class: 'img-responsive small_image') %>
+  <% else %>
+    <%= image_tag('no_uploaded.png', size: '140x140', class: 'img-responsive small_image') %>
+  <% end %>
+</span>

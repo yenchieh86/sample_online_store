@@ -1,56 +1,12 @@
-<h1>This is <%= @category.title %>'s page</h1>
-<p><strong>Description: </strong><%= @category.description %></p>
-<p><strong>Number of items: </strong><%= @category.items_count %></p>
-<% if @items.size > 0 %>
-  <table>
-    <tr>
-      <th>No.</th>
-      <th>Title</th>
-      <th>Description</th>
-      <th>stock</th>
-      <th>price</th>
-      <th>status</th>
-      <th>sold</th>
-    </tr>
-    <% @items.each_with_index do |item, index| %>
-      <tr>
-        <th>
-          <%= index + 1 %>
-        </th>
-        <th>
-          <%= link_to item.title, category_item_path(@category,item) %>
-        </th>
-        <th>
-          <p><%= item.description %></p>
-        </th>
-        <th>
-          <p><%= item.stock %></p>
-        </th>
-        <th>
-          <p><%= item.price %></p>
-        </th>
-        <th>
-          <p><%= item.status %></p>
-        </th>
-        <th>
-          <%= link_to item.sold, '#' %>
-        </th>
-        <th>
-          <%= link_to 'edit', edit_item_path(item) %>
-          <%= link_to 'Delete', item_path(item), method: :delete %>
-        </th>
-      </tr>
+<div class='category_show'>
+  <div class='row'>
+    <div class='col-md-12 text-center'>
+      <h3><%= @category.title %>'s Item List Page</h3>
+    </div>
+  </div>
+  <div class='row items_list_are text-center'>
+    <% @category.items.each do |item| %>
+      <%= render 'items/item_show', item: item, category: @category %>
     <% end %>
-  </table>
-<% else %>
-  <h3>There's no item in this category.</h3>
-<% end %>
-
-
-
-<% if current_user != nil && current_user.admin? %>
-  <br />
-  <%= link_to 'Edit Category Setting', edit_category_path(@category) %>
-  <br />
-  <%= link_to 'Delete This Category', category_path(@category), method: :delete %>
-<% end %>
+  </div>
+</div>
