@@ -25,6 +25,11 @@
   }
 }
 
+/* for layouts/system_messages view */
+.system_messages {
+  margin-top: -20px;
+}
+
 /* for static_page #home view */
 .home_page {
   .category_title {
@@ -94,4 +99,11 @@
 
 .out_of_stock {
   color: rgb(255,0,0);
+}
+
+/* for order #index view */
+.order_index {
+  th {
+    text-align: center;
+  }
 }

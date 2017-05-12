@@ -6,6 +6,7 @@ class ItemsController < ApplicationController
 
   def show
     @item = Item.includes(:category).friendly.find(params[:id])
+    @order_item = OrderItem.new
   end
 
   def new

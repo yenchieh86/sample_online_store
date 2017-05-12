@@ -2,6 +2,7 @@
 <br />
 <h3>Admin: <%= @user.admin? %></h3>
 <h3>Standard: <%= @user.standard? %></h3>
+<h3>Order: <%= link_to @user.orders.count, user_orders_path(@user) %></h3>
 <br />
 <%= link_to 'Change Account Information', edit_user_registration_path %>
 <br />

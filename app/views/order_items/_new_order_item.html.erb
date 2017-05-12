@@ -1,0 +1,10 @@
+<%= bootstrap_form_for(@order_item, url: item_order_items_path(item) ) do |f| %>
+  <%= f.number_field  :quantity, value: 0 %>
+  <%= f.hidden_field  :item_id, value: item.id %>
+  <%= f.hidden_field  :item_price, value: item.price %>
+  <%= f.hidden_field  :item_weight, value: item.weight %>
+  <%= f.hidden_field  :item_length, value: item.length %>
+  <%= f.hidden_field  :item_width, value: item.width %>
+  <%= f.hidden_field  :item_height, value: item.height %>
+  <%= f.submit %>
+<% end %>

@@ -1,0 +1,81 @@
+<div class='order_index'>
+  <div class='row'>
+    <div class='col-md-12 text-center'>
+      <h3><%= @user.username %>'s Order List</h3>
+    </div>
+  </div>
+  <div class='row'>
+    <% if @user.orders.any? %>
+      <table class="table table-bordered text-center">
+        <tr class="active">
+          <th>
+            No.
+          </th>
+          <th>
+            Status
+          </th>
+          <th>
+            Order Item #
+          </th>
+          <th>
+            Total Weight
+          </th>
+          <th>
+            Total Dimensions
+          </th>
+          <th>
+            Order Item Total
+          </th>
+          <th>
+            Shipping
+          </th>
+          <th>
+            Tax
+          </th>
+          <th>
+            Order Total Amount
+          </th>
+        </tr>
+        <% @user.orders.each_with_index do |order, index| %>
+          <tr>
+            <td>
+              <%= index + 1 %>
+            </td>
+            <td>
+              <%= order.status %>
+            </td>
+            <td>
+              <%= link_to order.order_items_count, order_path(order), class: "btn btn-default btn-xs btn-block" %>
+            </td>
+            <td>
+              <%= order.total_weight %>
+            </td>
+            <td>
+              <%= order.total_dimensions %>
+            </td>
+            <td>
+              <%= order.order_items_total %>
+            </td>
+            <td>
+              <%= order.shipping %>
+            </td>
+            <td>
+              <%= order.tax %>
+            </td>
+            <td>
+              <%= order.order_total_amount %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    <% else %>
+      <div class='col-md-12 text-center'>
+        <% if @user == current_user %>
+          <h3>You don't have any item in your order list yet</h3>
+        <% else %>
+          <h3>This user doesn't have any item in his/her order list yet</h3>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

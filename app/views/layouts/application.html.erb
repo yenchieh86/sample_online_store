@@ -11,6 +11,9 @@
   <body>
     <%= render 'layouts/header' %>
     <%= render 'layouts/navbar' %>
+    <% if flash.any? %>
+      <%= render 'layouts/system_messages' %>
+    <% end %>
     <div class='container-fluid'>
       <%= yield %>
     </div>
