@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   end
   
   resources 'orders', only: [:show]
-  resources 'order_items', only: [:new]
+  resources 'order_items', only: [:new, :edit, :update, :destroy]
   
   root 'static_page#home'
 end

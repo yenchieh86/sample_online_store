@@ -33,6 +33,9 @@
       <th>
         Total Price
       </th>
+      <th>
+        Setting
+      </th>
     </tr>
     <% @order.order_items.each_with_index do |order_item, index| %>
       <tr>
@@ -41,7 +44,8 @@
         </td>
         <td>
           <% if order_item.item.pictures.any? %>
-            <%= link_to image_tag(order_item.item.pictures[0].url, size: '100x100', class: 'img-responsive center-block'), category_item_path(order_item.item.category_id, order_item.item.id) %>
+            <%= link_to image_tag(order_item.item.pictures[0].url, size: '100x100', class: 'img-responsive center-block'),
+            category_item_path(order_item.item.category_id, order_item.item.id) %>
           <% else %>
             <%= image_tag('no_uploaded.png', size: '100x100', class: 'img-responsive center-block') %>
           <% end %>
@@ -57,6 +61,15 @@
         </td>
         <td>
           <%= order_item.total_amount %>
+        </td>
+        <td>
+          <div class='order_item_edit'>
+            <%= bootstrap_form_for(order_item, layout: :inline) do |f| %>
+              <%= f.number_field :quantity, skip_label: true %>
+              <%= f.submit "Update" %>
+            <% end %>
+          </div>
+          <%= link_to 'Delete', order_item_path(order_item), method: :delete, class: "btn btn-danger" %>
         </td>
       </tr>
     <% end %>

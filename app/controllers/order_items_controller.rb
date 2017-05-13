@@ -29,6 +29,90 @@ class OrderItemsController < ApplicationController
   end
 
   def edit
+    
+  end
+  
+  def update
+    order_item = OrderItem.find(params[:id])
+    order = order_item.order
+    item = order_item.item
+    
+    order.total_weight -= order_item.total_weight
+    order.total_dimensions -= order_item.total_dimensions
+    order.order_items_total -= order_item.total_amount
+
+    if params[:order_item][:quantity].to_i == 0
+      old_data = { order_id: order_item.order_id, item_id: order_item.item_id,
+                   quantity: order_item.quantity, total_weight: order_item.total_weight,
+                   total_dimensions: order_item.total_dimensions, total_amount: order_item.total_amount }
+      if order_item.destroy
+        if order.save
+          flash[:success] = 'Your order has been deleted.'
+          redirect_to order_url(order)
+        else
+          OrderItem.create(order_id: old_data[:order_id], item_id: old_data[:item_id],
+                           quantity: old_data[:quantity], total_weight: old_data[:total_weight],
+                           total_amount: old_data[:total_amount], total_dimensions: old_data[:total_dimensions])
+          flash.now[:alert] = order.errors.full_messages
+          render order_path(order)
+        end
+      else
+        flash.now[:alert] = order_item.errors.full_messages
+        render order_path(order)
+      end
+    else
+      old_data = { quantity: order_item.quantity, total_weight: order_item.total_weight,
+                   total_dimensions: order_item.total_dimensions, total_amount: order_item.total_amount }
+  
+      order_item.quantity = params[:order_item][:quantity]
+      order_item.total_weight = item.weight * order_item.quantity
+      order_item.total_dimensions = order_item.quantity.to_f * item.length * item.width * item.height
+      order_item.total_amount = item.price * order_item.quantity
+      
+      order.total_weight += order_item.total_weight
+      order.total_dimensions += order_item.total_dimensions
+      order.order_items_total += order_item.total_amount                              
+      
+      if order_item.save
+        if order.save
+          flash[:success] = 'Your order has been updated.'
+          redirect_to order_url(order)
+        else
+          order_item.quantity = old_data[:quantity]
+          order_item.total_weight = old_data[:total_weight]
+          order_item.total_dimensions = old_data[:total_dimensions]
+          order_item.total_amount = old_data[:total_amount]
+          order_item.save
+          
+          flash.now[:alert] = order.errors.full_messages
+          render order_path(order)
+        end
+      else
+        flash.now[:alert] = order_item.errors.full_messages
+        render order_path(order)
+      end
+    end
+  end
+  
+  def destroy
+    order_item = OrderItem.find(params[:id])
+    
+    order = Order.find(order_item.order_id)
+    
+    order.total_weight -= order_item.total_weight
+    order.total_dimensions -= order_item.total_dimensions
+    order.order_items_total -= order_item.total_amount
+    order.save
+    
+    if order_item.destroy
+      flash[:success] = 'Your order has been updated.'
+      redirect_to order_url(order)
+    else
+      order_update(order, order_item)
+      flash.now[:alert] = order_item.errors.full_messages
+      render order_path(order)
+    end
+    
   end
   
   private
@@ -45,3 +129,4 @@ class OrderItemsController < ApplicationController
     end
   
 end
+
