@@ -4,7 +4,6 @@
       <h3><%= @user.username %>'s Order List</h3>
     </div>
   </div>
-  <div class='row'>
     <% if @user.orders.any? %>
       <table class="table table-bordered text-center">
         <tr class="active">
@@ -77,5 +76,4 @@
         <% end %>
       </div>
     <% end %>
-  </div>
 </div>

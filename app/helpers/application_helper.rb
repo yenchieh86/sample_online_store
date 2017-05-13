@@ -10,4 +10,12 @@ module ApplicationHelper
       "<span class='out_of_stock'>Out of Stock</span>".html_safe
     end 
   end
+  
+  def count_total_quantity(order)
+    n = 0
+    order.order_items.each do |order_item|
+      n += order_item.quantity
+    end
+    n
+  end
 end

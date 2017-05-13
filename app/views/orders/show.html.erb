@@ -1,2 +1,68 @@
-<h1>Orders#show</h1>
-<p>Find me in app/views/orders/show.html.erb</p>
+<div class='order_show'>
+  <div class='row'>
+    <div class='col-md-12 text-center'>
+      <% if @order.user != current_user %>
+        <h2><%= @order.user.username %>'s order detail</h2>
+      <% else %>
+        <h2>Order Item List for This Order</h2>
+      <% end %>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col-md-12 text-center'>
+      <h5>(Order Status: <%= @order.status %> )</h5>
+    </div>
+  </div>
+  <table class='table table-bordered text-center'>
+    <tr>
+      <th>
+        No.
+      </th>
+      <th>
+        Img
+      </th>
+      <th>
+        Item Title
+      </th>
+      <th>
+        Price
+      </th>
+      <th>
+        Quantity
+      </th>
+      <th>
+        Total Price
+      </th>
+    </tr>
+    <% @order.order_items.each_with_index do |order_item, index| %>
+      <tr>
+        <td>
+          <%= index + 1 %>
+        </td>
+        <td>
+          <% if order_item.item.pictures.any? %>
+            <%= link_to image_tag(order_item.item.pictures[0].url, size: '100x100', class: 'img-responsive center-block'), category_item_path(order_item.item.category_id, order_item.item.id) %>
+          <% else %>
+            <%= image_tag('no_uploaded.png', size: '100x100', class: 'img-responsive center-block') %>
+          <% end %>
+        </td>
+        <td>
+          <%= order_item.item.title %>
+        </td>
+        <td>
+          $ <%= order_item.item.price %>
+        </td>
+        <td>
+          <%= order_item.quantity %>
+        </td>
+        <td>
+          <%= order_item.total_amount %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <h4>Total Order Item #: <%= @order.order_items_count %></h4>
+  <h4>Total Quantity: <%= count_total_quantity(@order) %></h4>
+  <h4>Total Price: <%= @order.order_items_total %></h4>
+</div>
+

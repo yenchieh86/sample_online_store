@@ -10,6 +10,7 @@ class OrdersController < ApplicationController
   end
 
   def show
+    @order = Order.includes(:user, :order_items).find(params[:id])
   end
   
   
