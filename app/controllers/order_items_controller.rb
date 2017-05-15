@@ -17,6 +17,7 @@ class OrderItemsController < ApplicationController
                                   params[:order_item][:item_width].to_f *
                                   params[:order_item][:item_height].to_f
     order_item.total_amount = params[:order_item][:item_price].to_f * order_item.quantity
+    order_item.shipping = params[:order_item][:item_shipping].to_f * order_item.quantity
     
     if order_item.save
       order_update(unpaid_order, order_item.reload)
@@ -40,11 +41,13 @@ class OrderItemsController < ApplicationController
     order.total_weight -= order_item.total_weight
     order.total_dimensions -= order_item.total_dimensions
     order.order_items_total -= order_item.total_amount
+    order.shipping -= order_item.shipping
 
     if params[:order_item][:quantity].to_i == 0
       old_data = { order_id: order_item.order_id, item_id: order_item.item_id,
                    quantity: order_item.quantity, total_weight: order_item.total_weight,
-                   total_dimensions: order_item.total_dimensions, total_amount: order_item.total_amount }
+                   total_dimensions: order_item.total_dimensions, total_amount: order_item.total_amount,
+                   shipping: order_item.shipping }
       if order_item.destroy
         if order.save
           flash[:success] = 'Your order has been deleted.'
@@ -52,7 +55,8 @@ class OrderItemsController < ApplicationController
         else
           OrderItem.create(order_id: old_data[:order_id], item_id: old_data[:item_id],
                            quantity: old_data[:quantity], total_weight: old_data[:total_weight],
-                           total_amount: old_data[:total_amount], total_dimensions: old_data[:total_dimensions])
+                           total_amount: old_data[:total_amount], total_dimensions: old_data[:total_dimensions],
+                           shipping: old_data[:shipping])
           flash.now[:alert] = order.errors.full_messages
           render order_path(order)
         end
@@ -62,16 +66,19 @@ class OrderItemsController < ApplicationController
       end
     else
       old_data = { quantity: order_item.quantity, total_weight: order_item.total_weight,
-                   total_dimensions: order_item.total_dimensions, total_amount: order_item.total_amount }
+                   total_dimensions: order_item.total_dimensions, total_amount: order_item.total_amount,
+                   shipping: order_item.shipping}
   
       order_item.quantity = params[:order_item][:quantity]
       order_item.total_weight = item.weight * order_item.quantity
       order_item.total_dimensions = order_item.quantity.to_f * item.length * item.width * item.height
       order_item.total_amount = item.price * order_item.quantity
+      order_item.shipping = item.shipping * order_item.quantity
       
       order.total_weight += order_item.total_weight
       order.total_dimensions += order_item.total_dimensions
-      order.order_items_total += order_item.total_amount                              
+      order.order_items_total += order_item.total_amount
+      order.shipping += order_item.shipping
       
       if order_item.save
         if order.save
@@ -82,6 +89,7 @@ class OrderItemsController < ApplicationController
           order_item.total_weight = old_data[:total_weight]
           order_item.total_dimensions = old_data[:total_dimensions]
           order_item.total_amount = old_data[:total_amount]
+          order_item.shipping = old_data[:shipping]
           order_item.save
           
           flash.now[:alert] = order.errors.full_messages
@@ -102,6 +110,7 @@ class OrderItemsController < ApplicationController
     order.total_weight -= order_item.total_weight
     order.total_dimensions -= order_item.total_dimensions
     order.order_items_total -= order_item.total_amount
+    order.shipping -= order_item.shipping
     order.save
     
     if order_item.destroy
@@ -125,6 +134,7 @@ class OrderItemsController < ApplicationController
       order.total_weight += order_item.total_weight
       order.total_dimensions += order_item.total_dimensions
       order.order_items_total += order_item.total_amount
+      order.shipping += order_item.shipping
       order.save
     end
   

@@ -24,6 +24,7 @@
     <div class='col-md-7'>
       <h4><strong>Category: </strong><%= @item.category.title %></h4>
       <h4><strong>Price: </strong>$<%= @item.price %></h4>
+      <h4><strong>Shipping: </strong>$<%= @item.shipping %></h4>
       <h4><strong>Stock: </strong><%= in_stock?(@item) %></h4>
       <h4><strong>Weight: </strong><%= @item.weight %></h4>
       <h4><strong>Dimensions: </strong><%= @item.length %> x <%= @item.width %> x <%= @item.height %></h4>

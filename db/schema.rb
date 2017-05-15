@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170512090324) do
+ActiveRecord::Schema.define(version: 20170515030912) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 20170512090324) do
     t.string   "slug"
     t.json     "pictures"
     t.integer  "order_items_count"
+    t.decimal  "shipping",          precision: 5, scale: 2, default: "0.0"
     t.index ["category_id"], name: "index_items_on_category_id", using: :btree
     t.index ["slug"], name: "index_items_on_slug", unique: true, using: :btree
     t.index ["status"], name: "index_items_on_status", using: :btree
@@ -73,6 +74,7 @@ ActiveRecord::Schema.define(version: 20170512090324) do
     t.datetime "created_at",                                                null: false
     t.datetime "updated_at",                                                null: false
     t.decimal  "total_dimensions", precision: 10, scale: 2, default: "0.0"
+    t.decimal  "shipping",         precision: 7,  scale: 2, default: "0.0"
     t.index ["item_id"], name: "index_order_items_on_item_id", using: :btree
     t.index ["order_id"], name: "index_order_items_on_order_id", using: :btree
     t.index ["status"], name: "index_order_items_on_status", using: :btree

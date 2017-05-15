@@ -31,6 +31,9 @@
         Quantity
       </th>
       <th>
+        Shipping
+      </th>
+      <th>
         Total Price
       </th>
       <th>
@@ -60,6 +63,9 @@
           <%= order_item.quantity %>
         </td>
         <td>
+          <%= order_item.shipping %>
+        </td>
+        <td>
           <%= order_item.total_amount %>
         </td>
         <td>
@@ -77,5 +83,7 @@
   <h4>Total Order Item #: <%= @order.order_items_count %></h4>
   <h4>Total Quantity: <%= count_total_quantity(@order) %></h4>
   <h4>Total Price: <%= @order.order_items_total %></h4>
+  <h4>Total Shipping: <%= @order.shipping %></h4>
 </div>
 
+48

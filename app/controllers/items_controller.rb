@@ -96,7 +96,7 @@ class ItemsController < ApplicationController
     def item_params
       params.require(:item).permit(:title, :description, :price, :stock,
                                    :weight, :length, :width, :height,
-                                   :category_id, :status, pictures: [])
+                                   :category_id, :status, :shipping, pictures: [])
     end
     
     def check_admin!

@@ -30,13 +30,13 @@ end
     Item.create(title: "#{admin_1.username}#{category.title}Item#{i}", description: "ItemDescription#{i}", price: Faker::Number.decimal(2),
                 stock: Faker::Number.between(0, 15), weight: Faker::Number.decimal(2), length: Faker::Number.decimal(2),
                 width: Faker::Number.decimal(2), height: Faker::Number.decimal(2), user_id: admin_1.id,
-                category_id: category.reload.id, sold: 0)
+                category_id: category.reload.id, sold: 0, shipping: Faker::Number.decimal(2))
   end
   10.times do |i|
     Item.create(title: "#{admin_2.username}#{category.title}Item#{i}", description: "ItemDescription#{i}", price: Faker::Number.decimal(2),
                 stock: Faker::Number.between(0, 15), weight: Faker::Number.decimal(2), length: Faker::Number.decimal(2),
                 width: Faker::Number.decimal(2), height: Faker::Number.decimal(2), user_id: admin_2.id,
-                category_id: category.reload.id, sold: 0)
+                category_id: category.reload.id, sold: 0, shipping: Faker::Number.decimal(2))
   end
 end
 
