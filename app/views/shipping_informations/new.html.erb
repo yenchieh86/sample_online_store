@@ -1,0 +1,9 @@
+<div class='row'>
+  <div class='col-md-12 text-center'>
+    <h3>Please Enter Your Shipping Information</h3>
+  </div>
+</div>
+<div class='row'>
+  <%= render 'shipping_informations/form', object: @shipping_information,
+      path: "/orders/#{params[:order_id]}/shipping_informations" %>
+</div>

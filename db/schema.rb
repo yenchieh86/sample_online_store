@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170515030912) do
+ActiveRecord::Schema.define(version: 20170515042610) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,6 +96,22 @@ ActiveRecord::Schema.define(version: 20170515030912) do
     t.index ["user_id"], name: "index_orders_on_user_id", using: :btree
   end
 
+  create_table "shipping_informations", force: :cascade do |t|
+    t.integer  "order_id"
+    t.string   "firmname",       default: "", null: false
+    t.string   "address1",       default: ""
+    t.string   "address2",       default: "", null: false
+    t.string   "city",           default: "", null: false
+    t.string   "state",          default: "", null: false
+    t.string   "zip5",           default: "", null: false
+    t.string   "zip4",           default: ""
+    t.string   "delivery_point", default: ""
+    t.string   "carrier_route",  default: ""
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.index ["order_id"], name: "index_shipping_informations_on_order_id", using: :btree
+  end
+
   create_table "store_activities", force: :cascade do |t|
     t.integer  "total_users",                                  default: 0
     t.integer  "total_categories",                             default: 0
@@ -141,4 +157,5 @@ ActiveRecord::Schema.define(version: 20170515030912) do
   add_foreign_key "order_items", "items"
   add_foreign_key "order_items", "orders"
   add_foreign_key "orders", "users"
+  add_foreign_key "shipping_informations", "orders"
 end

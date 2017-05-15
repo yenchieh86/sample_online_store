@@ -26,13 +26,16 @@
             Order Item Total
           </th>
           <th>
+            Tax %
+          </th>
+          <th>
             Shipping
           </th>
           <th>
-            Tax
+            Order Total Amount
           </th>
           <th>
-            Order Total Amount
+            Check Out
           </th>
         </tr>
         <% @user.orders.each_with_index do |order, index| %>
@@ -56,13 +59,23 @@
               <%= order.order_items_total %>
             </td>
             <td>
-              <%= order.shipping %>
-            </td>
-            <td>
               <%= order.tax %>
             </td>
             <td>
+              <%= order.shipping %>
+            </td>
+            <td>
               <%= order.order_total_amount %>
+            </td>
+            <td>
+              <% if order.unpaid? && order.shipping_information == nil %>
+                <%= link_to 'Create Destination', new_order_shipping_information_path(order), class: "btn btn-default btn-xs btn-block" %>
+              <% elsif order.unpaid? && !order.shipping_information.nil?  %>
+                <%= link_to 'Show Destination', order_shipping_information_path(order, order.shipping_information), class: "btn btn-default btn-xs btn-block" %>
+                <%= link_to 'Make the Payment','#', class: "btn btn-primary btn-xs btn-block" %>
+              <% else %>
+                <%= link_to 'Track Package', '#', class: "btn btn-default btn-xs btn-block" %>
+              <% end %>
             </td>
           </tr>
         <% end %>

@@ -18,7 +18,10 @@ Rails.application.routes.draw do
     resources 'order_items', only: [:create]
   end
   
-  resources 'orders', only: [:show]
+  resources 'orders', only: [:show] do
+    resources 'shipping_informations', only: [:show, :new, :create, :edit, :update]  
+  end
+  
   resources 'order_items', only: [:new, :edit, :update, :destroy]
   
   root 'static_page#home'

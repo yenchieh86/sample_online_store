@@ -1,0 +1,64 @@
+<div class='row'>
+  <div class='col-md-12 text-center'>
+    <h3>You Package Shipping Destination</h3>
+  </div>
+</div>
+<div class='row'>
+  <div class='col-md-12 text-center'>
+    <table class="table table-bordered text-center">
+      <tr class="active">
+        <th>
+          Firm Name
+        </th>
+        <th>
+           Apartment or Suite #
+        </th>
+        <th>
+          Address
+        </th>
+        <th>
+          City
+        </th>
+        <th>
+          State
+        </th>
+        <th>
+          5 digit Zip Code
+        </th>
+        <th>
+          4 digit Zip Code
+        </th>
+      </tr>
+      <tr>
+        <th>
+          <%= @shipping_information.firmname %>
+        </th>
+        <th>
+          <% if @shipping_information.address1 != nil %>
+           <%= @shipping_information.address1 %>
+          <% else %>
+          
+          <% end %>
+        </th>
+        <th>
+          <%= @shipping_information.address2 %>
+        </th>
+        <th>
+          <%= @shipping_information.city %>
+        </th>
+        <th>
+          <%= @shipping_information.state %>
+        </th>
+        <th>
+          <%= @shipping_information.zip5 %>
+        </th>
+        <th>
+          <%= @shipping_information.zip4 %>
+        </th>
+      </tr>
+    </table>
+    <% if @shipping_information.order.unpaid? %>
+      <%= link_to 'Change Destination', edit_order_shipping_information_path(@shipping_information.order, @shipping_information), class: "btn btn-default btn-xs btn-block" %>
+    <% end %>
+  </div>
+</div>

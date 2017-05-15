@@ -8,7 +8,7 @@ class OrderItemsController < ApplicationController
   end
   
   def create
-    unpaid_order = current_user.orders.find_by(status: 'unpaid') || current_user.orders.create
+    unpaid_order = current_user.orders.find_by(status: 'unpaid') || current_user.orders.create(tax: 0.08)
     
     order_item = unpaid_order.order_items.new(order_item_params)
     order_item.total_weight = params[:order_item][:item_weight].to_f * order_item.quantity

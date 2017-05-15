@@ -1,4 +1,7 @@
 FactoryGirl.define do
+  factory :shipping_information do
+    
+  end
   factory :store_activity do
     total_users 1
     total_categories 1
