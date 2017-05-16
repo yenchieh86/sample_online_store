@@ -19,6 +19,12 @@
                 <%= link_to 'Setting', user_show_path(current_user) %>
               </li>
               <li role="separator" class="divider"></li>
+              <% if current_user.orders.unpaid.any? %>
+                <li>
+                  <%= link_to 'Make the payment', user_orders_path(current_user) %>
+                </li>
+                <li role="separator" class="divider"></li>
+              <% end %>
               <li>
                 <%= link_to 'Sign Out', destroy_user_session_path, method: :delete %>
               </li>
