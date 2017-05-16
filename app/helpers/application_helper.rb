@@ -22,7 +22,7 @@ module ApplicationHelper
   def order_status_text_for_order_index(order)
     case order.status
       when 'unpaid'
-        "<%= order.status %>".html_safe
+        order.status
       when 'unshipped'
         "Waiting for shipping"
       when 'unreceived'
