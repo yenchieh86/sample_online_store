@@ -18,4 +18,19 @@ module ApplicationHelper
     end
     n
   end
+  
+  def order_status_text_for_order_index(order)
+    case order.status
+      when 'unpaid'
+        "<%= order.status %>".html_safe
+      when 'unshipped'
+        "Waiting for shipping"
+      when 'unreceived'
+        "Shipped"
+      when 'finished'
+        "Finished"
+      else
+        'Please contact us'
+    end
+  end
 end

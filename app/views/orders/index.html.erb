@@ -44,7 +44,7 @@
               <%= index + 1 %>
             </td>
             <td>
-              <%= order.status %>
+              <%= order_status_text_for_order_index(order) %>
             </td>
             <td>
               <%= link_to order.order_items_count, order_path(order), class: "btn btn-default btn-xs btn-block" %>
@@ -72,7 +72,9 @@
                 <%= link_to 'Create Destination', new_order_shipping_information_path(order), class: "btn btn-default btn-xs btn-block" %>
               <% elsif order.unpaid? && !order.shipping_information.nil?  %>
                 <%= link_to 'Show Destination', order_shipping_information_path(order, order.shipping_information), class: "btn btn-default btn-xs btn-block" %>
-                <%= link_to 'Make the Payment','#', class: "btn btn-primary btn-xs btn-block" %>
+                <% if order.order_total_amount > 0 %>
+                  <%= link_to 'Make the Payment',new_order_charge_path(order), class: "btn btn-primary btn-xs btn-block" %> 
+                <% end %>
               <% else %>
                 <%= link_to 'Track Package', '#', class: "btn btn-default btn-xs btn-block" %>
               <% end %>
