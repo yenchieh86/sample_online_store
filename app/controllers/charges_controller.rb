@@ -1,4 +1,5 @@
 class ChargesController < ApplicationController
+  before_action :order_has_destination?
   before_action :check_order_total_amount!
   
   def new
@@ -29,11 +30,20 @@ class ChargesController < ApplicationController
   end
   
   private
+  
     def check_order_total_amount!
       order = Order.find(params[:order_id])
       unless order.order_total_amount > 0.0
         flash[:alert] = "You don't have any item in this order yet."
         redirect_to user_orders_path(current_user)
+      end
+    end
+    
+    def order_has_destination?
+      order = Order.find(params[:order_id])
+      if order.shipping_information == nil
+        flash[:notice] = "Please enter the destination"
+        redirect_to new_order_shipping_information_path(order)
       end
     end
 end

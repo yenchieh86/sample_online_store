@@ -16,12 +16,14 @@
           <th>
             Order Item #
           </th>
-          <th>
-            Total Weight
-          </th>
-          <th>
-            Total Dimensions
-          </th>
+          <% if current_user.admin? %>
+            <th>
+              Total Weight
+            </th>
+            <th>
+              Total Dimensions
+            </th>
+          <% end %>
           <th>
             Order Item Total
           </th>
@@ -49,12 +51,14 @@
             <td>
               <%= link_to order.order_items_count, order_path(order), class: "btn btn-default btn-xs btn-block" %>
             </td>
-            <td>
-              <%= order.total_weight %>
-            </td>
-            <td>
-              <%= order.total_dimensions %>
-            </td>
+            <% if current_user.admin? %>
+              <td>
+                <%= order.total_weight %>
+              </td>
+              <td>
+                <%= order.total_dimensions %>
+              </td>
+            <% end %>
             <td>
               <%= order.order_items_total %>
             </td>
@@ -68,14 +72,15 @@
               <%= order.order_total_amount %>
             </td>
             <td>
-              <% if order.unpaid? && order.shipping_information == nil %>
+              <% if order.shipping_information == nil %>
                 <%= link_to 'Create Destination', new_order_shipping_information_path(order), class: "btn btn-default btn-xs btn-block" %>
-              <% elsif order.unpaid? && !order.shipping_information.nil?  %>
-                <%= link_to 'Show Destination', order_shipping_information_path(order, order.shipping_information), class: "btn btn-default btn-xs btn-block" %>
-                <% if order.order_total_amount > 0 %>
-                  <%= link_to 'Make the Payment',new_order_charge_path(order), class: "btn btn-primary btn-xs btn-block" %> 
-                <% end %>
               <% else %>
+                <%= link_to 'Show Destination', order_shipping_information_path(order, order.shipping_information), class: "btn btn-default btn-xs btn-block" %>
+              <% end %>
+              <% if order.order_total_amount > 0 && order.status == 'unpaid'%>
+                <%= link_to 'Make the Payment',new_order_charge_path(order), class: "btn btn-primary btn-xs btn-block" %> 
+              <% end %>
+              <% if order.status == 'unreceived' || order.status == 'finished' %>
                 <%= link_to 'Track Package', '#', class: "btn btn-default btn-xs btn-block" %>
               <% end %>
             </td>

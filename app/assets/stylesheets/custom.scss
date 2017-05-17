@@ -80,6 +80,7 @@
   
   h2 {
       margin-top: 0;
+      margin-left: 15px;
     }
   .small_image_area {
     margin-top: 10px;
@@ -87,6 +88,10 @@
     .img-responsive.small_image {
       display: inline-block;
     }
+  }
+  
+  .form-control {
+    width: 100px;
   }
 }
 
@@ -102,16 +107,64 @@
 /* for order #index and #show view */
 .order_index,
 .order_show {
-  th {
-    text-align: center;
+  table tr {
+    th {
+      vertical-align: middle;
+      text-align: center;
+    }
+    
+    th p {
+      font-size: 1px;
+    }
+    
+    td {
+      vertical-align: middle;
+    }
   }
 }
 
 .order_show {
-  table tr td {
-    vertical-align: middle
+  .order_status {
+    margin-bottom: 10px;
+    
   }
+  
+  
+  
   .order_item_edit {
     margin-bottom: 10px;
+  }
+}
+
+/* for user #show view */
+.user_show {
+  .button_area {
+    background-color: rgb(224,224,224);
+    
+    .col-md-3 {
+      margin: 10px 60px;
+      width: 230.75px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+/* for user_list view*/
+.user_list {
+  table tr {
+    th {
+    vertical-align: middle;
+    text-align: center;
+    }
+    
+    td {
+      vertical-align: middle;
+    }
+    
+    .btn {
+      width: 70px;
+      margin: 2px;
+    }
   }
 }

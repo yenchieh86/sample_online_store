@@ -43,7 +43,6 @@ class OrderItemsController < ApplicationController
     order.total_dimensions -= order_item.total_dimensions
     order.order_items_total -= order_item.total_amount
     order.shipping -= order_item.shipping
-    order.order_total_amount = order.order_items_total * (order.tax + 1.0) + order.shipping
 
     if params[:order_item][:quantity].to_i == 0
       old_data = { order_id: order_item.order_id, item_id: order_item.item_id,
@@ -52,7 +51,7 @@ class OrderItemsController < ApplicationController
                    shipping: order_item.shipping }
       if order_item.destroy
         if order.save
-          flash[:success] = 'Your order has been updated.'
+          flash[:success] = 'Your order has been deleted.'
           redirect_to order_url(order)
         else
           OrderItem.create(order_id: old_data[:order_id], item_id: old_data[:item_id],
@@ -81,7 +80,6 @@ class OrderItemsController < ApplicationController
       order.total_dimensions += order_item.total_dimensions
       order.order_items_total += order_item.total_amount
       order.shipping += order_item.shipping
-      order.order_total_amount = order.order_items_total * (order.tax + 1.0) + order.shipping
       
       if order_item.save
         if order.save
@@ -114,7 +112,6 @@ class OrderItemsController < ApplicationController
     order.total_dimensions -= order_item.total_dimensions
     order.order_items_total -= order_item.total_amount
     order.shipping -= order_item.shipping
-    order.order_total_amount = order.order_items_total * (order.tax + 1.0) + order.shipping
     order.save
     
     if order_item.destroy
@@ -130,14 +127,6 @@ class OrderItemsController < ApplicationController
   
   private
   
-    def check_order_status!
-      order = OrderItem.find(params[:id]).order
-      if order.status != 'unpaid'
-        flash[:alert] = "This order can't be changed after your made the payment.\n Please contact us if you have any question."
-        redirect_to user_orders_path(current_user)
-      end
-    end
-  
     def order_item_params
       params.require(:order_item).permit(:quantity, :item_id)
     end
@@ -147,8 +136,16 @@ class OrderItemsController < ApplicationController
       order.total_dimensions += order_item.total_dimensions
       order.order_items_total += order_item.total_amount
       order.shipping += order_item.shipping
-      order.order_total_amount = order.order_items_total * (order.tax + 1.0) + order.shipping
       order.save
+    end
+    
+    def check_order_status!
+      order_item = OrderItem.find_by(id: params[:id])
+      if order_item == nil && order_item.order.status != 'unpaid'
+        flash[:alert] = "You can't change order's information after you made the payment. Please contact us if you have any question."
+        redirect_to user_orders_path(current_user)
+      end
+      
     end
   
 end

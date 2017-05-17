@@ -5,7 +5,7 @@ class OrdersController < ApplicationController
     if current_user.admin?
       @user = User.includes(:orders).friendly.find(params[:user_id])
     else
-      @user = current_user.includes(:orders)
+      @user = current_user
     end
   end
 

@@ -8,10 +8,20 @@
       <% end %>
     </div>
   </div>
-  <div class='row'>
-    <div class='col-md-12 text-center'>
-      <h5>(Order Status: <%= @order.status %> )</h5>
-    </div>
+  <div class='row order_status text-center'>
+    <% if @order.status. == 'unpaid' %>
+      <div class='col-md-2 col-md-offset-5 bg-danger'>
+        Order Status: <%= @order.status %>
+      </div>
+    <% elsif @order.status == 'finished' %>
+      <div class='col-md-2 col-md-offset-5 bg-info'>
+        Order Status: <%= @order.status %>
+      </div>
+    <% else %>
+      <div class='col-md-2 col-md-offset-5 bg-warning'>
+        Order Status: <%= @order.status %>
+      </div>
+    <% end %>
   </div>
   <table class='table table-bordered text-center'>
     <tr>
@@ -32,13 +42,16 @@
       </th>
       <th>
         Total Price
+        <p>(not include tax)</p>
       </th>
       <th>
         Shipping
       </th>
-      <th>
-        Setting
-      </th>
+      <% if @order.status == 'unpaid' %>
+        <th>
+          Setting
+        </th>
+      <% end %>
     </tr>
     <% @order.order_items.each_with_index do |order_item, index| %>
       <tr>
@@ -69,22 +82,36 @@
         <td>
           <%= order_item.shipping %>
         </td>
-        <td>
-          <div class='order_item_edit'>
-            <%= bootstrap_form_for(order_item, layout: :inline) do |f| %>
-              <%= f.number_field :quantity, skip_label: true %>
-              <%= f.submit "Update" %>
-            <% end %>
-          </div>
-          <%= link_to 'Delete', order_item_path(order_item), method: :delete, class: "btn btn-danger" %>
-        </td>
+        <% if @order.status == 'unpaid' %>
+          <td>
+            <div class='order_item_edit'>
+              <%= bootstrap_form_for(order_item, layout: :inline) do |f| %>
+                <%= f.number_field :quantity, skip_label: true %>
+                <%= f.submit "Change Quantity" %>
+              <% end %>
+            </div>
+            <%= link_to 'Delete', order_item_path(order_item), method: :delete, class: "btn btn-danger" %>
+          </td>
+        <% end %>
       </tr>
     <% end %>
   </table>
-  <h4>Total Order Item #: <%= @order.order_items_count %></h4>
-  <h4>Total Quantity: <%= count_total_quantity(@order) %></h4>
-  <h4>Total Price: <%= @order.order_items_total %></h4>
-  <h4>Total Shipping: <%= @order.shipping %></h4>
+  
+  <table class='table table-bordered text-center'>
+    <tr>
+      <th>
+        <h4>Total Order Item #: <%= @order.order_items_count %></h4>
+      </th>
+      <th>
+        <h4>Total Quantity: <%= count_total_quantity(@order) %></h4>
+      </th>
+      <th>
+        <h4>Total Price: <%= @order.order_items_total %></h4>
+        <p>(Without tax and shipping fee)</p>
+      </th>
+      <th>
+        <h4>Total Shipping: <%= @order.shipping %></h4>
+      </th>
+    </tr>
+  </table>
 </div>
-
-48

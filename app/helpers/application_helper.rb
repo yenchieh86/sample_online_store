@@ -33,4 +33,14 @@ module ApplicationHelper
         'Please contact us'
     end
   end
+  
+  # for user #list view (show total spent)
+  def total_spent(user, status, boolean)
+    if boolean == 1
+      orders = user.orders.select { |order| order.status == status }
+    else
+      orders = user.orders.select { |order| order.status != status }
+    end
+    orders.inject(0) { |sum, order| sum + order.order_total_amount }
+  end
 end

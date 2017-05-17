@@ -22,13 +22,15 @@
       </div>
     </div>
     <div class='col-md-7'>
-      <h4><strong>Category: </strong><%= @item.category.title %></h4>
+      <h4><strong>Category: </strong><%= link_to @item.category.title, category_path(@item.category) %></h4>
       <h4><strong>Price: </strong>$<%= @item.price %></h4>
       <h4><strong>Shipping: </strong>$<%= @item.shipping %></h4>
       <h4><strong>Stock: </strong><%= in_stock?(@item) %></h4>
       <h4><strong>Weight: </strong><%= @item.weight %></h4>
       <h4><strong>Dimensions: </strong><%= @item.length %> x <%= @item.width %> x <%= @item.height %></h4>
-      <h4><%= render 'order_items/new_order_item', item: @item %></h4>
+      <% if @item.stock > 0 %>
+        <h4><%= render 'order_items/new_order_item', item: @item %></h4>
+      <% end %>
       <h4><strong>Description: </strong></h4>
       <h5><%= @item.description %></h5>
     </div>
