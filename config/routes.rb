@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   resources 'orders', only: [:show] do
     resources 'shipping_informations', only: [:show, :new, :create, :edit, :update]
     resources 'charges', only: [:new, :create]
+    resources 'tracking_numbers'
   end
   
   resources 'order_items', only: [:new, :edit, :update, :destroy]

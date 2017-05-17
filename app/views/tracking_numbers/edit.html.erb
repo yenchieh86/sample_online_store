@@ -1,0 +1,11 @@
+<div class='row'>
+  <div class='col-md-12 text-center'>
+    <h3>Enter Tracking Number</h3>
+  </div>
+</div>
+<div class='row'>
+  <%= bootstrap_form_tag url: "/orders/#{params[:order_id]}/tracking_numbers/#{params[:id]}", method: :patch do |f| %>
+    <%= f.text_field :tracking_number %>
+    <%= f.submit 'Save' %>
+  <% end %>
+</div>

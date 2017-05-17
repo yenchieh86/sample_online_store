@@ -33,11 +33,13 @@ class ShippingInformationsController < ApplicationController
                              'The address has been changed, please double check before you make the payment.')
   end
   
+  
   private
   
     def check_user!
-      order = Order.find(params[:order_id])
-      if current_user != order.user
+      order = Order.find_by(id: params[:order_id])
+      
+      if order == nil || (!current_user.admin? && current_user != order.user) 
         flash[:alert] = "You can't access to other user's order information."
         redirect_to root_url
       end

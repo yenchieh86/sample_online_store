@@ -43,7 +43,7 @@ class OrderItemsController < ApplicationController
     order.total_dimensions -= order_item.total_dimensions
     order.order_items_total -= order_item.total_amount
     order.shipping -= order_item.shipping
-
+    order.order_total_amount = order.order_items_total * ( 1.0 + order.tax) + order.shipping
     if params[:order_item][:quantity].to_i == 0
       old_data = { order_id: order_item.order_id, item_id: order_item.item_id,
                    quantity: order_item.quantity, total_weight: order_item.total_weight,
@@ -80,6 +80,7 @@ class OrderItemsController < ApplicationController
       order.total_dimensions += order_item.total_dimensions
       order.order_items_total += order_item.total_amount
       order.shipping += order_item.shipping
+      order.order_total_amount = order.order_items_total * ( 1.0 + order.tax) + order.shipping
       
       if order_item.save
         if order.save
@@ -112,6 +113,7 @@ class OrderItemsController < ApplicationController
     order.total_dimensions -= order_item.total_dimensions
     order.order_items_total -= order_item.total_amount
     order.shipping -= order_item.shipping
+    order.order_total_amount = order.order_items_total * ( 1.0 + order.tax) + order.shipping
     order.save
     
     if order_item.destroy
@@ -136,6 +138,7 @@ class OrderItemsController < ApplicationController
       order.total_dimensions += order_item.total_dimensions
       order.order_items_total += order_item.total_amount
       order.shipping += order_item.shipping
+      order.order_total_amount = order.order_items_total * ( 1.0 + order.tax) + order.shipping
       order.save
     end
     
