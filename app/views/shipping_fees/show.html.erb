@@ -12,6 +12,7 @@
       <h3 class='bg-info'><%= @price %></h3>
     <% end %>
     <% if @services_array %>
+      <h5>Special Service List:</h5>
       <% for n in 0...@services_array %>
         <p class='bg-warning'><%= "ID: [#{@id[n]}], ServiceName: [#{@service_name[n]}], Available: [#{@available[n]}], Price: [$#{@service_price[n]}]" %></p>
       <% end %>
