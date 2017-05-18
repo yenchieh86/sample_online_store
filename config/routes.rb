@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'shipping_fees/show', to: 'shipping_fees#show', as: 'check_shipping_fee'
+
   get 'user/show/:id', to: 'users#show', as: 'user_show'
   get 'user/list', to: 'users#list', as: 'user_list'
   delete 'user/erase/:id', to: 'users#erase', as: 'erase_user'

@@ -1,0 +1,54 @@
+<div class='row'>
+  <div class='col-md-12 text-center'>
+    <h1>Look Up Shipping Fee</h1>
+  </div>
+</div>
+<div class='row'>
+  <div class='col-md-12'>
+    <% if @error %>
+      <h3 class='bg-danger'><%= @error %></h3>
+    <% end %>
+    <% if @price %>
+      <h3 class='bg-info'><%= @price %></h3>
+    <% end %>
+    <% if @services_array %>
+      <% for n in 0...@services_array %>
+        <p class='bg-warning'><%= "ID: [#{@id[n]}], ServiceName: [#{@service_name[n]}], Available: [#{@available[n]}], Price: [$#{@service_price[n]}]" %></p>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+<div class='row'>
+  <div class='col-md-12'>
+    <%= bootstrap_form_tag url: '/shipping_fees/show', method: :get do |f| %>
+      <%= f.hidden_field  :company, value: 'USPS' %>
+      <%= f.form_group :service, label: { text: "Service" }, help: "required" do %>
+        <%= f.radio_button :service, 'Priority', label: 'Priority', checked: true %>
+      <% end %>
+      <%= f.text_field :zip_orignation, label: 'Zip Origination', help: "required" %>
+      <%= f.text_field :zip_destination, label: 'Zip Destination', help: "required" %>
+      <%= f.number_field :pounds, label: 'Pounds', step: 0.01, help: "required" %>
+      <%= f.number_field :ounces, label: 'Ounces', step: 0.01, help: "required" %>
+      <%= f.form_group :container, label: { text: "Container" }, help: "required" do %>
+        <%= f.radio_button :container, 'SM FLAT RATE ENVELOPE', label: 'SM FLAT RATE ENVELOPE (10" * 6")' %>
+        <%= f.radio_button :container, 'FLAT RATE ENVELOPE', label: 'FLAT RATE ENVELOPE (12-1/2" * 9-1/2")' %>
+        <%= f.radio_button :container, 'LEGAL FLAT RATE ENVELOPE', label: 'LEGAL FLAT RATE ENVELOPE (15" * 9-1/2")' %>
+        <%= f.radio_button :container, 'SM FLAT RATE BOX', label: 'Small Flat Rate Box (8-5/8" * 5-3/8" * 1-5/8")' %>
+        <%= f.radio_button :container, 'MD FLAT RATE BOX', label: 'Medium Flat Rate Box (13-5/8" * 11-7/8" * 3-3/8")' %>
+        <%= f.radio_button :container, 'MD FLAT RATE BOX', label: 'Medium Flat Rate Box (11" * 8-1/2" * 5-1/2")' %>
+        <%= f.radio_button :container, 'LG FLAT RATE BOX', label: 'Large Flat Rate Box (23-11/16" * 11-3/4" * 3")' %>
+        <%= f.radio_button :container, 'LG FLAT RATE BOX', label: 'Large Flat Rate Box (12" * 12" * 5-1/2")' %>
+      <% end %>
+      <%= f.form_group :size, label: { text: "Size" }, help: "required" do %>
+        <%= f.radio_button :size, 'REGULAR', label: 'REGULAR (less than 12"', inline: true %>
+        <%= f.radio_button :size, 'LARGE', label: 'LARGE (larger than 12"', inline: true %>
+      <% end %>
+      <%= f.number_field :width, label: 'Width', step: 0.01, help: "required when size is large" %>
+      <%= f.number_field :length, label: 'Length', step: 0.01, help: "required when size is large" %>
+      <%= f.number_field :height, label: 'Height', step: 0.01, help: "required when size is large" %>
+      <%= f.submit %>
+    <% end %>
+  </div>
+</div>
+
+
