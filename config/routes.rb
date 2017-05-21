@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     resources 'items', only: [:show]
   end
   
-  resources 'items', only: [:index, :new, :create, :edit, :update, :destroy] do
+  resources 'items', only: [:new, :create, :edit, :update, :destroy] do
     resources 'order_items', only: [:create]
   end
   
@@ -26,7 +26,7 @@ Rails.application.routes.draw do
     resources 'tracking_numbers'
   end
   
-  resources 'order_items', only: [:new, :edit, :update, :destroy]
+  resources 'order_items', only: [:update, :destroy]
   
   root 'static_page#home'
 end

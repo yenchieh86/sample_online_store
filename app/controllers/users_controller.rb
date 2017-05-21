@@ -12,15 +12,25 @@ class UsersController < ApplicationController
   end
   
   def list
-    if current_user && current_user.role == 'admin'
-      @users = User.all
-    else
+    if current_user == nil
+      flash[:alert] = 'Please log in first.'
+      redirect_to new_user_session_url
+    elsif current_user.role != 'admin'
+      flash[:alert] = 'You can not access to user list page.'
       redirect_to root_url
+    else
+      @users = User.all
     end
   end
   
   def erase
-    if current_user != nil && current_user.admin?
+    if current_user == nil
+      flash[:alert] = 'Please sign in first.'
+      redirect_to new_user_session_url
+    elsif !current_user.admin?
+      flash[:alert] = "You can't use this feature."
+      redirect_to root_url
+    else
       @user = User.friendly.find(params[:id])
       items = @user.items
       backup_user = User.find_by(username: 'backup')
@@ -39,8 +49,6 @@ class UsersController < ApplicationController
         flash.now[:alert] = @user.errors.full_messages
         render :list
       end
-    else
-      redirect_to root_url
     end
   end
   

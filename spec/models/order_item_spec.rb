@@ -1,5 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe OrderItem, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+RSpec.describe OrderItem do
+  
+  it 'should have status that default as unpaid' do
+    order_item = OrderItem.create
+    expect(order_item.status).to eq 'unpaid'
+  end
+
+  it { should belong_to(:order) }
+  it { should belong_to(:item) }
 end

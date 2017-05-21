@@ -9,7 +9,7 @@ class User < ApplicationRecord
          
   before_validation { username.downcase! }
   
-  VALID_USERNAME_REGEX = %r(\A[a-z][a-z\d]+\z)
+  VALID_USERNAME_REGEX = %r(\A[a-z][a-z\d-]+\z)
   validates :username, presence: true, length: { minimum: 6, maximum: 20 }, format: { with: VALID_USERNAME_REGEX }, uniqueness: { case_sensitive: false }
   
   extend FriendlyId

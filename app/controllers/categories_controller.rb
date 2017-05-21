@@ -44,13 +44,14 @@ class CategoriesController < ApplicationController
   def destroy
     category = Category.friendly.find(params[:id])
     items = category.items
-    backup_category = Category.where(title: 'Backup').first || Category.create(title: 'Backup', description: 'This category is for backup')
+    backup_category = Category.find_by(title: 'Backup')
     
     items.each do |item|
       item.update_attributes(category_id: backup_category.id)
     end
     
     if category.destroy
+      flash[:success] = 'The category has been deleted'
       redirect_to root_url
     else
       items.each do |item|
@@ -65,7 +66,10 @@ class CategoriesController < ApplicationController
   private
   
     def identify_admin!
-      unless current_user && current_user.role == 'admin'
+      if current_user == nil
+        flash[:alert] = 'Please sign in first.'
+        redirect_to new_user_session_url
+      elsif !current_user.admin?
         flash[:alert] = 'You are not authorized to create new category.'
         redirect_to root_url
       end

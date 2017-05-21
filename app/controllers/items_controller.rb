@@ -1,8 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :check_admin!, only: [:new, :create, :edit, :update, :delete]
-  
-  def index
-  end
+  before_action :check_admin!, only: [:new, :create, :edit, :update, :destroy]
 
   def show
     @item = Item.includes(:category).friendly.find(params[:id])
@@ -58,7 +55,7 @@ class ItemsController < ApplicationController
     if current_user.id == @item.user_id
       if @item.update_attributes(item_params)
         flash[:success] = 'The item has been updated'
-        redirect_to root_url
+        redirect_to category_item_url(@item.category, @item)
       else
         flash.now[:alert] = @item.errors.full_messages
         categories = Category.all 
@@ -77,17 +74,12 @@ class ItemsController < ApplicationController
   def destroy
     @item = Item.friendly.find(params[:id])
     
-    if current_user.id == @item.user_id
-      if @item.destroy
-        flash[:success] = 'Item has been destroyed.'
-        redirect_to user_show_url(current_user)
-      else
-        flash[:alert] = @item.errors.full_messages
-        redirect_to user_show_url(current_user)
-      end
+    if @item.destroy
+      flash[:success] = 'Item has been destroyed.'
+      redirect_to user_show_url(current_user)
     else
-      flash[:alert] = 'You are not authorized to do that.'
-      redirect_to root_url
+      flash[:alert] = @item.errors.full_messages
+      redirect_to user_show_url(current_user)
     end
   end
   
@@ -100,7 +92,10 @@ class ItemsController < ApplicationController
     end
     
     def check_admin!
-      unless current_user && current_user.admin?
+      if current_user == nil
+        flash[:alert] = 'Please sign in first.'
+        redirect_to new_user_session_url
+      elsif !current_user.admin?
         flash[:alert] = 'You are not authorized to do that.'
         redirect_to root_url
       end
