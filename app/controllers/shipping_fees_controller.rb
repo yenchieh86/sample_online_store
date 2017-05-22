@@ -3,7 +3,7 @@ class ShippingFeesController < ApplicationController
     company = params[:company]
     if company != nil
       
-      uri = URI('http://production.shippingapis.com/ShippingAPI.dll?API=RateV4&XML=<RateV4Request USERID="663YENCH4306"><Revision>2</Revision><Package ID="1ST"><Service>Priority</Service><ZipOrigination>44106</ZipOrigination><ZipDestination>20770</ZipDestination><Pounds>0</Pounds><Ounces>3.12345678</Ounces><Container>MD FLAT RATE BOX</Container><Size>REGULAR</Size></Package></RateV4Request>')
+      uri = URI('http://production.shippingapis.com/ShippingAPI.dll?API=RateV4&XML=<RateV4Request USERID="' + ENV['USPS_USER_ID'] + '"><Revision>2</Revision><Package ID="1ST"><Service>Priority</Service><ZipOrigination>44106</ZipOrigination><ZipDestination>20770</ZipDestination><Pounds>0</Pounds><Ounces>3.12345678</Ounces><Container>MD FLAT RATE BOX</Container><Size>REGULAR</Size></Package></RateV4Request>')
       result = Net::HTTP.get(uri)
       if result.include?('<Error>')
         @error = result.scan(/<Description>.+Description>/).map { |word| word.sub(/<Description>/, '').sub(/<.Description>/, '') }.join("\n")

@@ -1,6 +1,8 @@
 class ShippingInformationsController < ApplicationController
+  before_action :authenticate_user!
   before_action :check_user!
-  before_action :check_order_status!, except: [:show]
+  before_action :order_already_has_shipping_information!, only: [:new, :create]
+  before_action :check_order_status!, except: [:create, :show]
   
   def show
     @shipping_information = ShippingInformation.includes(:order).find(params[:id])
@@ -44,12 +46,20 @@ class ShippingInformationsController < ApplicationController
         redirect_to root_url
       end
     end
+    
+    def order_already_has_shipping_information!
+      order = Order.find_by(id: params[:order_id])
+      if !order.shipping_information.nil?
+        flash[:alert] = 'This order already has shipping_information.'
+        redirect_to order_url(order)
+      end
+    end
   
     def check_order_status!
       order = Order.find(params[:order_id])
-      if !order.unpaid?
-        flash.now[:alert] = "You can't change this order's destination, please contact us if you have any question."
-        render order_path(order)
+      unless current_user.admin? || order.unpaid?
+        flash[:alert] = "You can't change this order's destination, please contact us if you have any question."
+        redirect_to order_url(order)
       end
     end
     
@@ -82,8 +92,8 @@ class ShippingInformationsController < ApplicationController
           object.firmname = object_firmname.split(' ').map { |word| word.capitalize }.join(' ')
           object.address1 = object_address1
           object.address2 = address2.split(' ').map { |word| word.capitalize }.join(' ')
-          object.city.capitalize!
-          object.state.upcase!
+          object.city = object_city.capitalize
+          object.state = object_state.upcase
           object.zip5 = zip5
           object.zip4 = zip4 if zip4 != nil
           object.delivery_point = delivery_point

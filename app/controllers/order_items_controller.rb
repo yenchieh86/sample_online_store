@@ -49,7 +49,6 @@ class OrderItemsController < ApplicationController
       end
     else
       order_item.quantity = params[:order_item][:quantity]
-      
       order_item_update(order_item, item)
       update_order_data(order, order_item, '+=')
       

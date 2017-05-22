@@ -1,4 +1,7 @@
 class TrackingNumbersController < ApplicationController
+  before_action :authenticate_user!
+  before_action :check_user!, only: [:show]
+  before_action :check_admin!, only: [:new, :create, :edit, :update]
 
   def show
     order = Order.find_by(id: params[:order_id])
@@ -9,7 +12,7 @@ class TrackingNumbersController < ApplicationController
       uri = URI('http://production.shippingapis.com/ShippingAPI.dll?API=TrackV2&XML=<TrackRequest USERID="' + ENV['USPS_USER_ID'] + '"><TrackID ID="' + tracking_id + '"></TrackID></TrackRequest>')
       result = Net::HTTP.get(uri)
       if result.include?('<Error>')
-      @package_process = result.scan(/<Description>.+Description>/).map { |word| word.sub(/<Description>/, '').sub(/<.Description>/, '') }.split('.').join("")
+        @package_process = result.scan(/<Description>.+Description>/).map { |word| word.sub(/<Description>/, '').sub(/<.Description>/, '') }.split('.').join("")
       else
         @package_process = result.scan(/<TrackSummary>.+TrackSummary>/).map { |word| word.sub(/<TrackSummary>/, '').sub(/<.TrackSummary>/, '') }.join("")
         @package_process.concat(result.scan(/<TrackDetail>.+TrackDetail>/).map { |word| word.sub(/<TrackDetail>/, '').sub(/<.TrackDetail>/, '') }.join(""))
@@ -52,20 +55,21 @@ class TrackingNumbersController < ApplicationController
       render 'new'
     end
   end
-end
-
-
-
-
-  def track_package
-    tracking_id = params[:tracking_id]
-    uri = URI('http://production.shippingapis.com/ShippingAPI.dll?API=TrackV2&XML=<TrackRequest USERID="' + ENV['USPS_USER_ID'] + '"><TrackID ID="' + tracking_id + '"></TrackID></TrackRequest>')
-    result = Net::HTTP.get(uri)
-    @package_process = ''
-    if result.include?('<Error>')
-      @package_process = result.scan(/<Description>.+Description>/).map { |word| word.sub(/<Description>/, '').sub(/<.Description>/, '') }.join("\n")
-    else
-      @package_process = result.scan(/<TrackSummary>.+TrackSummary>/).map { |word| word.sub(/<TrackSummary>/, '').sub(/<.TrackSummary>/, '') }.join("\n")
-      @package_process.concat(result.scan(/<TrackDetail>.+TrackDetail>/).map { |word| word.sub(/<TrackDetail>/, '').sub(/<.TrackDetail>/, '') }.join("\n"))
+  
+  private
+  
+    def check_admin!
+      if !current_user.admin?
+        flash[:alert] = 'You are not authorized to do that.'
+        redirect_to root_url
+      end
     end
-  end
+    
+    def check_user!
+      order = Order.find_by(id: params[:order_id])
+      unless current_user.admin? || current_user == order.user
+        flash[:alert] = 'You are not authorized to do that.'
+        redirect_to root_url
+      end
+    end
+end
