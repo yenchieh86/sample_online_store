@@ -5,8 +5,9 @@
     </div>
   </div>
   <div class='row items_list_are text-center'>
-    <% @category.items.each do |item| %>
+    <% @items.each do |item| %>
       <%= render 'items/item_show', item: item, category: @category %>
     <% end %>
   </div>
+  <%= paginate @items %>
 </div>

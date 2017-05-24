@@ -7,6 +7,7 @@ class CategoriesController < ApplicationController
 
   def show
     @category = Category.includes(:items).friendly.find(params[:id])
+    @items = @category.items.order(:title).page(params[:page]).per(18)
   end
 
   def new
