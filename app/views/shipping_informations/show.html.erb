@@ -57,8 +57,12 @@
         </th>
       </tr>
     </table>
-    <% if @shipping_information.order.unpaid? %>
-      <%= link_to 'Change Destination', edit_order_shipping_information_path(@shipping_information.order, @shipping_information), class: "btn btn-default btn-xs btn-block" %>
-    <% end %>
   </div>
+  <div class='col-md-2'>
+    <% if @shipping_information.order.unpaid? %>
+    <%= link_to 'Change Destination', edit_order_shipping_information_path(@shipping_information.order, @shipping_information), class: "btn btn-default btn-block" %>
+  <% end %>
+  </div>
+  
+  
 </div>

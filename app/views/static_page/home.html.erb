@@ -1,8 +1,8 @@
 <div class='home_page'>
   <div class='row'>
     <div class='col-md-12 text-center'>
-      <%if current_user %>
-        <h3>Hi <%= current_user.username.capitalize %>, nice to see you again!</h3>
+      <% if current_user %>
+        <h3>Hi <%= username_capitalize! %>, nice to see you again!</h3>
       <% else %>
         <h1>Welcome to Yen's Shop</h1>
       <% end %>

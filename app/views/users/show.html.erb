@@ -9,8 +9,9 @@
       <div class='row text-center'>
         <%= link_to 'Change Account Information', edit_user_registration_path, class: "col-md-3 btn btn-default" %>
         <%= link_to 'Order List', user_orders_path(@user), class: "col-md-3 btn btn-default" %>
-        <% if current_user.admin? && current_user == @user %>
+        <% if @user.admin? %>
           <%= link_to 'User List', user_list_path, class: "col-md-3 btn btn-info" %>
+          <%= link_to 'Category List', categories_path, class: "col-md-3 btn btn-info" %>
           <%= link_to 'Add New Category', new_category_path, class: "col-md-3 btn btn-info" %>
           <%= link_to 'Add New Item', new_item_path, class: "col-md-3 btn btn-info" %>
           <%= link_to 'Check Shipping Fee', check_shipping_fee_path, class: "col-md-3 btn btn-info" %>

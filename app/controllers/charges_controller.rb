@@ -47,4 +47,6 @@ class ChargesController < ApplicationController
         redirect_to new_order_shipping_information_url(order)
       end
     end
+    
+    
 end

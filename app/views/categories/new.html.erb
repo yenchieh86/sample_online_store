@@ -1,6 +1,6 @@
-<h1>Create New Category</h1>
-<%= bootstrap_form_for(@category) do |f| %>
-  <%= f.text_field :title %>
-  <%= f.text_area :description %>
-  <%= f.submit "Create" %>
-<% end %>
+<div class='row'>
+  <div class='col-md-12 text-center'>
+    <h1>Create New Category</h1>
+  </div>
+</div>
+<%= render 'form', category: @category, lable: 'Create' %>

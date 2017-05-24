@@ -1,4 +1,15 @@
 module ApplicationHelper
+  
+  # for layouts/_header
+  def current_user_has_any_unpaid_order?
+    current_user.orders.unpaid.any?
+  end
+  
+  # for statuc_page/home
+  def username_capitalize!
+    current_user.username.capitalize
+  end
+  
   def navbar_category_list
     Category.all
   end

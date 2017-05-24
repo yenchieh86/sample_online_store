@@ -1,5 +1,9 @@
 class ItemsController < ApplicationController
   before_action :check_admin!, only: [:new, :create, :edit, :update, :destroy]
+  
+  def index
+    @category = Category.includes(:items).friendly.find(params[:category_id])
+  end
 
   def show
     @item = Item.includes(:category).friendly.find(params[:id])

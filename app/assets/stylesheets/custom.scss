@@ -22,7 +22,6 @@
   }
 }
 
-/* for layouts/system_messages view */
 .system_messages {
   margin-top: -20px;
 }
@@ -33,7 +32,6 @@
   padding: 10px;
 }
 
-/* for static_page #home view */
 .home_page {
   .category_title {
     border: 2px solid rgb(200,0,0);
@@ -70,7 +68,6 @@
   }
 }
 
-/* for item #show view */
 .item_show {
   @media only screen and (max-width: 991px) {
     .item_title {
@@ -104,7 +101,6 @@
   color: rgb(255,0,0);
 }
 
-/* for order #index and #show view */
 .order_index,
 .order_show {
   table tr {
@@ -129,14 +125,11 @@
     
   }
   
-  
-  
   .order_item_edit {
     margin-bottom: 10px;
   }
 }
 
-/* for user #show view */
 .user_show {
   .button_area {
     background-color: rgb(224,224,224);
@@ -150,7 +143,6 @@
   }
 }
 
-/* for user_list view*/
 .user_list {
   table tr {
     th {
@@ -167,4 +159,73 @@
       margin: 2px;
     }
   }
+}
+
+.category_index {
+  
+  table tr th {
+    vertical-align: middle;
+    text-align: center;
+  }
+  
+  .number {
+    width: 50px;
+  }
+  
+  .item_count {
+    width: 100px;
+  }
+  
+  .category_title {
+    text-align: left;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  .setting {
+    width: 200px;
+  }
+  
+  .btn {
+    width: 80px;
+  }
+}
+
+.charge {
+  table tr {
+    td,
+    th {
+      vertical-align: middle;
+      text-align: center;
+    }
+  }
+}
+
+.item_index {
+  table tr {
+    .number {
+      width: 50px;
+    }
+    
+    .image {
+      width: 150px;
+    }
+    
+    .setting,
+    .price,
+    .stock {
+      width: 100px;
+    }
+    
+    th {
+      text-align: center;
+    }
+    
+    td {
+      vertical-align: middle;
+      text-align: center;
+    }
+  }
+  
+  
 }

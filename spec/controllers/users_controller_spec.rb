@@ -21,7 +21,7 @@ RSpec.describe UsersController do
       
       it 'should redirect_to new_user_session_url' do
         get :show, params: { id: standard_user.reload.id }
-        expect(flash[:alert]).to eq 'Please log in first.'
+        expect(flash[:alert]).to eq "You need to sign in or sign up before continuing."
         expect(response).to redirect_to(new_user_session_url)
       end
     end
@@ -63,7 +63,7 @@ RSpec.describe UsersController do
     context 'unsigned_in_user' do
       it 'should redirect_to new_user_session_url' do
         get :list
-        expect(flash[:alert]).to eq 'Please log in first.'
+        expect(flash[:alert]).to eq "You need to sign in or sign up before continuing."
         expect(response).to redirect_to(new_user_session_url)
       end
     end
@@ -105,7 +105,7 @@ RSpec.describe UsersController do
     context 'unsigned_in_user' do
       it "should not able to erase other user's account" do
         expect { delete :erase, params: { id: another_user.reload.id } }.to change { User.count }.by(0)
-        expect(flash[:alert]).to eq 'Please sign in first.'
+        expect(flash[:alert]).to eq "You need to sign in or sign up before continuing."
         expect(response).to redirect_to new_user_session_url
       end
     end

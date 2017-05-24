@@ -77,14 +77,19 @@
               <% else %>
                 <%= link_to 'Show Destination', order_shipping_information_path(order, order.shipping_information), class: "btn btn-default btn-xs btn-block" %>
               <% end %>
+              
               <% if order.order_total_amount > 0 && order.status == 'unpaid'%>
                 <%= link_to 'Make the Payment',new_order_charge_path(order), class: "btn btn-primary btn-xs btn-block" %> 
               <% end %>
-              <% if order.status == 'unshipped' && current_user.admin? %>
-                <%= link_to 'Enter Tracking #', new_order_tracking_number_path(order), class: "btn btn-warning btn-xs btn-block" %>
-              <% elsif current_user.admin? %>
-                <%= link_to 'Update Tracking #', edit_order_tracking_number_path(order, order.shipping_information), class: "btn btn-warning btn-xs btn-block" %>
+              
+              <% if current_user.admin? %>
+                <% if order.status == 'unshipped' %>
+                  <%= link_to 'Enter Tracking #', new_order_tracking_number_path(order), class: "btn btn-warning btn-xs btn-block" %>
+                <% elsif order.status == 'unreceived' %>
+                  <%= link_to 'Update Tracking #', edit_order_tracking_number_path(order, order.shipping_information), class: "btn btn-warning btn-xs btn-block" %>
+                <% end %>
               <% end %>
+              
               <% if order.status == 'unreceived' || order.status == 'finished' %>
                 <%= link_to 'Track Package', order_tracking_number_path(order, order.shipping_information), class: "btn btn-default btn-xs btn-block" %>
               <% end %>

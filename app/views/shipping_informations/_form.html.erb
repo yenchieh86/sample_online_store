@@ -1,10 +1,15 @@
-<%= bootstrap_form_for(object, url: path) do |f| %>
-  <%= f.text_field :firmname, label: "FirmName", required: true %>
-  <%= f.text_field :address1, label: "Apartment / Suite #" %>
-  <%= f.text_field :address2, label: "Address", required: true %>
-  <%= f.text_field :city, label: "City", required: true %>
-  <%= f.text_field :state, label: "State", required: true %>
-  <%= f.text_field :zip5, label: "5 digit Zip Code", required: true %>
-  <%= f.text_field :zip4, label: "4 digit Zip Code" %>
-  <%= f.submit "Check" %>
-<% end %>
+<div class='row'>
+  <div class='col-md-10 col-md-offset-1'>
+    <%= bootstrap_form_for(object, url: path) do |f| %>
+    <%= f.text_field :firmname, label: "FirmName", required: true %>
+    <%= f.text_field :address1, label: "Apartment / Suite #" %>
+    <%= f.text_field :address2, label: "Address", required: true %>
+    <%= f.text_field :city, label: "City", required: true %>
+    <%= f.text_field :state, label: "State", required: true %>
+    <%= f.text_field :zip5, label: "5 digit Zip Code", required: true %>
+    <%= f.text_field :zip4, label: "4 digit Zip Code" %>
+    <%= f.submit "Check" %>
+  <% end %>
+  </div>
+</div>
+  

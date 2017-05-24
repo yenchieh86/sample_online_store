@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   end
   
   resources 'categories' do
-    resources 'items', only: [:show]
+    resources 'items', only: [:index, :show]
   end
   
   resources 'items', only: [:new, :create, :edit, :update, :destroy] do

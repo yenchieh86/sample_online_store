@@ -1,10 +1,8 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!
   
   def show
-    if current_user == nil
-      flash[:alert] = 'Please log in first.'
-      redirect_to new_user_session_url
-    elsif current_user.admin?
+    if current_user.admin?
       @user = User.friendly.find(params[:id])
     else
       @user = current_user
@@ -12,22 +10,16 @@ class UsersController < ApplicationController
   end
   
   def list
-    if current_user == nil
-      flash[:alert] = 'Please log in first.'
-      redirect_to new_user_session_url
-    elsif current_user.role != 'admin'
+    if current_user.admin?
+      @users = User.all
+    else
       flash[:alert] = 'You can not access to user list page.'
       redirect_to root_url
-    else
-      @users = User.all
     end
   end
   
   def erase
-    if current_user == nil
-      flash[:alert] = 'Please sign in first.'
-      redirect_to new_user_session_url
-    elsif !current_user.admin?
+    if !current_user.admin?
       flash[:alert] = "You can't use this feature."
       redirect_to root_url
     else
@@ -51,5 +43,4 @@ class UsersController < ApplicationController
       end
     end
   end
-  
 end

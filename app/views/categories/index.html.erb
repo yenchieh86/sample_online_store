@@ -1,27 +1,36 @@
-<h1>Categories#index</h1>
-<h3>No. of category: <%= Category.count %></h3>
-<table>
-  <tr>
-    <th>No.</th>
-    <th>Title</th>
-    <th>No. of Items</th>
-    <th>Setting</th>
-  </tr>
-  <% @categories.each_with_index do |category, index| %>
-    <tr>
-      <th>
-        <%= index + 1 %>
-      </th>
-      <th>
-        <%= category.title %>
-      </th>
-      <th>
-        <%= link_to "#{category.items_count} items", category_path(category) %>
-      </th>
-      <th>
-        <%= link_to 'edit', edit_category_path(category) %>
-        <%= link_to 'Delete', category_path(category), method: :delete %>
-      </th>
-    </tr>
-  <% end %>
-</table>
+<div class='category_index' >
+  <div class='row'>
+    <div class='col-md-12 text-center'>
+      <h1>Category List</h1>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col-md-10 col-md-offset-1'>
+      <table class="table table-bordered text-center">
+        <tr>
+          <th class='number'>No.</th>
+          <th class='title'>Title</th>
+          <th class='item_count'>No. of Items</th>
+          <th class='setting'>Setting</th>
+        </tr>
+        <% @categories.each_with_index do |category, index| %>
+          <tr>
+            <td>
+              <%= index + 1 %>
+            </td>
+            <td class='category_title'>
+              <%= category.title %>
+            </td>
+            <td>
+              <%= link_to "#{category.items_count} items", category_items_path(category) %>
+            </td>
+            <td>
+              <%= link_to 'edit', edit_category_path(category), class: 'btn btn-default btn-xs' %>
+              <%= link_to 'Delete', category_path(category), method: :delete, class: 'btn btn-danger btn-xs' %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>

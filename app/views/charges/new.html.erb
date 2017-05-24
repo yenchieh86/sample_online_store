@@ -1,19 +1,80 @@
-<%= form_tag order_charges_path(@order) do %>
-  <article>
-    <% if flash[:error].present? %>
-      <div id="error_explanation">
-        <p><%= flash[:error] %></p>
-      </div>
-    <% end %>
-    <label class="amount">
-      <span>Amount: $<%= @order.order_total_amount %></span>
-    </label>
-  </article>
-
-
-  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-          data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-          data-description="Pay for order"
-          data-amount="<%= (@order.order_total_amount * 100).to_i %>"
-          data-locale="auto"></script>
-<% end %>
+<div class='charge'>
+  <div class='row'>
+    <div class='col-md-10 col-md-offset-1'>
+      <%= form_tag order_charges_path(@order) do %>
+        <article>
+          <% if flash[:error].present? %>
+            <div id="error_explanation">
+              <p><%= flash[:error] %></p>
+            </div>
+          <% end %>
+          <table class='table table-bordered text-center'>
+            <tr>
+              <th>
+                No.
+              </th>
+              <th>
+                Img
+              </th>
+              <th>
+                Item Title
+              </th>
+              <th>
+                Price / item
+              </th>
+              <th>
+                Quantity
+              </th>
+              <th>
+                Total Price
+                <p>(not include tax)</p>
+              </th>
+              <th>
+                Shipping
+              </th>
+            </tr>
+            <% @order.order_items.each_with_index do |order_item, index| %>
+              <tr>
+                <td>
+                  <%= index + 1 %>
+                </td>
+                <td>
+                  <% if order_item.item.pictures.any? %>
+                    <%= link_to image_tag(order_item.item.pictures[0].url, size: '100x100', class: 'img-responsive center-block'),
+                    category_item_path(order_item.item.category_id, order_item.item.id) %>
+                  <% else %>
+                    <%= link_to image_tag('no_uploaded.png', size: '100x100', class: 'img-responsive center-block'),
+                    category_item_path(order_item.item.category_id, order_item.item.id) %>
+                  <% end %>
+                </td>
+                <td>
+                  <%= order_item.item.title %>
+                </td>
+                <td>
+                  $ <%= order_item.item.price %>
+                </td>
+                <td>
+                  <%= order_item.quantity %>
+                </td>
+                <td>
+                  <%= order_item.total_amount %>
+                </td>
+                <td>
+                  <%= order_item.shipping %>
+                </td>
+              </tr>
+            <% end %>
+          </table>
+          <label class="amount">
+            <span>Total Amount: $<%= @order.order_total_amount %></span>
+          </label>
+        </article>
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+                data-description="Payment"
+                data-amount="<%= (@order.order_total_amount * 100).to_i %>"
+                data-locale="auto"></script>
+      <% end %>
+    </div>
+  </div>
+</div>

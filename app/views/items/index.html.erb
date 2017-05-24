@@ -1,0 +1,59 @@
+<div class='item_index'>
+  <div class='row'>
+    <div class='col-md-12 text-center'>
+      <h3><%= @category.title %>'s item list</h3>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col-md-10 col-md-offset-1'>
+      <table class="table table-bordered">
+        <tr>
+          <th class='number'>
+            No.
+          </th>
+          <th class='image'>
+            Image
+          </th>
+          <th>
+            Title
+          </th>
+          <th class='price'>
+            Price
+          </th>
+          <th class='stock'>
+            Stock
+          </th>
+          <th class='setting'>
+            Setting
+          </th>
+        </tr>
+        <% @category.items.each_with_index do |item, index| %>
+          <tr>
+            <td>
+              <%= index + 1 %>
+            </td>
+            <td>
+              <% if item.pictures.any? %>
+                <%= image_tag(order_item.item.pictures[0].url, size: '100x100', class: 'img-responsive center-block') %>
+              <% else %>
+                <%= image_tag('no_uploaded.png', size: '100x100', class: 'img-responsive center-block') %>
+              <% end %>
+            </td>
+            <td>
+              <%= item.title %>
+            </td>
+            <td>
+              <%= item.price %>
+            </td>
+            <td>
+              <%= item.stock %>
+            </td>
+            <td>
+              <%= link_to 'Edit', edit_item_path(item), class: 'btn btn-default' %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>

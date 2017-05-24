@@ -19,9 +19,9 @@
                 <%= link_to 'Setting', user_show_path(current_user) %>
               </li>
               <li role="separator" class="divider"></li>
-              <% if current_user.orders.unpaid.any? %>
+              <% if current_user_has_any_unpaid_order? %>
                 <li>
-                  <%= link_to 'Make the payment', user_orders_path(current_user) %>
+                  <%= link_to 'Make the Payment', user_orders_path(current_user) %>
                 </li>
                 <li role="separator" class="divider"></li>
               <% end %>
