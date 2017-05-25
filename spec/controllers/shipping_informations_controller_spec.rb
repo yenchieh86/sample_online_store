@@ -130,7 +130,7 @@ RSpec.describe ShippingInformationsController do
                                                                                                    city: 'Cerritos',
                                                                                                    state: 'CA',
                                                                                                    zip5: '90703',
-                                                                                                   zip4: '' } } }.to change { ShippingInformation.count }.by(1)
+                                                                                                   zip4: '6084' } } }.to change { ShippingInformation.count }.by(1)
         expect(flash[:success]).to eq 'The address has been saved, please double check before you make the payment.'
         expect(response).to redirect_to order_shipping_information_url(standard_user_order, standard_user_order.shipping_information)
       end
@@ -142,7 +142,7 @@ RSpec.describe ShippingInformationsController do
                                                                                                    city: 'Cerritos',
                                                                                                    state: 'CA',
                                                                                                    zip5: '90703',
-                                                                                                   zip4: '' } } }.to change { ShippingInformation.count }.by(0)
+                                                                                                   zip4: '6084' } } }.to change { ShippingInformation.count }.by(0)
         expect(flash.now[:alert]).to eq 'Address Not Found.  '
         expect(response).to render_template(:new)
         
@@ -153,7 +153,7 @@ RSpec.describe ShippingInformationsController do
                                                                                                    city: 'Cerritos',
                                                                                                    state: 'CA',
                                                                                                    zip5: '90703',
-                                                                                                   zip4: '' } } }.to change { ShippingInformation.count }.by(0)
+                                                                                                   zip4: '6084' } } }.to change { ShippingInformation.count }.by(0)
         expect(flash.now[:alert]).to eq 'Address is not match.'
         expect(response).to render_template(:new)
       
@@ -163,7 +163,7 @@ RSpec.describe ShippingInformationsController do
                                                                                                    city: 'tt',
                                                                                                    state: 'CA',
                                                                                                    zip5: '90703',
-                                                                                                   zip4: '' } } }.to change { ShippingInformation.count }.by(0)
+                                                                                                   zip4: '6084' } } }.to change { ShippingInformation.count }.by(0)
         expect(flash.now[:alert]).to eq 'Invalid City.  '
         expect(response).to render_template(:new)
         
@@ -173,7 +173,7 @@ RSpec.describe ShippingInformationsController do
                                                                                                    city: 'Cerritos',
                                                                                                    state: 'tt',
                                                                                                    zip5: '90703',
-                                                                                                   zip4: '' } } }.to change { ShippingInformation.count }.by(0)
+                                                                                                   zip4: '6084' } } }.to change { ShippingInformation.count }.by(0)
         expect(flash.now[:alert]).to eq 'Invalid State Code.  '
         expect(response).to render_template(:new)
         
@@ -183,7 +183,7 @@ RSpec.describe ShippingInformationsController do
                                                                                                    city: 'Cerritos',
                                                                                                    state: 'CA',
                                                                                                    zip5: '00000',
-                                                                                                   zip4: '' } } }.to change { ShippingInformation.count }.by(0)
+                                                                                                   zip4: '6084' } } }.to change { ShippingInformation.count }.by(0)
         expect(flash.now[:alert]).to eq '5 digit Zipcode is not match.'
         expect(response).to render_template(:new)
         
