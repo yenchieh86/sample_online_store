@@ -18,6 +18,10 @@ module PageObjects
         PageObjects::Pages::UsersShowPage.new
       end
       
+      def click_logo
+        click_link "Yen's Store"
+      end
+      
       private
       
         def account_dropdown

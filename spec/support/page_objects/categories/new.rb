@@ -4,7 +4,7 @@ module PageObjects
   module Categories
     class New < Base
       
-      def create_new_category(title, description)
+      def create(title, description)
         fill_form(:user, { title: title, description: description } )
         click_button 'Create'
       end

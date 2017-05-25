@@ -9,8 +9,8 @@ RSpec.describe "static_page/home.html.erb" do
   before do
     category1.items = [item1, item2]
     category1.save
-    @categories = [category1, category2]
-    
+    @categories = Kaminari.paginate_array([category1, category2]).page(1)
+
     controller.singleton_class.class_eval do
       protected
       

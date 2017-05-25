@@ -25,10 +25,15 @@ class UsersController < ApplicationController
     else
       @user = User.friendly.find(params[:id])
       items = @user.items
+      orders = @user.orders
       backup_user = User.find_by(username: 'backup')
       
       items.each do |item|
         item.update_attributes(user_id: backup_user.id)
+      end
+      
+      orders.each do |order|
+        order.update_attributes(user_id: backup_user.id)
       end
       
       if @user.destroy

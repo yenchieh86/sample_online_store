@@ -14,7 +14,7 @@
           <th class='setting'>Setting</th>
         </tr>
         <% @categories.each_with_index do |category, index| %>
-          <tr>
+          <tr class=<%= category.title %>>
             <td>
               <%= index + 1 %>
             </td>
@@ -22,7 +22,7 @@
               <%= category.title %>
             </td>
             <td>
-              <%= link_to "#{category.items_count} items", category_items_path(category) %>
+              <%= link_to "#{pluralize(category.items_count, 'item')}", category_items_path(category) %>
             </td>
             <td>
               <%= link_to 'edit', edit_category_path(category), class: 'btn btn-default btn-xs' %>

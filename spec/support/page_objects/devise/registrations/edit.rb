@@ -13,7 +13,6 @@ module PageObjects
         def delete_account
           click_button 'Cancel my account'
         end
-        
       end
     end
   end

@@ -14,8 +14,22 @@ module PageObjects
       end
       
       def category_new_page
-        click_linl 'Add New Category'
-        PageObjects::Category::New.new
+        click_link 'Add New Category'
+        PageObjects::Categories::New.new
+      end
+      
+      def category_list
+        click_link 'Category List'
+        PageObjects::Categories::Index.new
+      end
+      
+      def order_list
+        click_link 'Order List'
+      end
+      
+      def new_item
+        click_link 'Add New Item'
+        PageObjects::Items::New.new
       end
       
       private

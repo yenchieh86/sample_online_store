@@ -8,7 +8,7 @@ RSpec.describe 'users/show.html.erb' do
     
     it 'should show greeting' do
       render
-      expect(rendered).to include("This is #{standard_user.username}'s show page")
+      expect(rendered).to include("This is #{standard_user.username.capitalize}'s show page")
     end
     
     it 'should show and hide specific tags' do
@@ -33,7 +33,7 @@ RSpec.describe 'users/show.html.erb' do
     
     it 'should show greeting' do
       render
-      expect(rendered).to include("This is #{admin.username}'s show page")
+      expect(rendered).to include("This is #{admin.username.capitalize}'s show page")
     end
     
     it 'should show all tags' do

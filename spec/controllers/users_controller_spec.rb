@@ -93,6 +93,7 @@ RSpec.describe UsersController do
     let!(:another_user) { create(:user) }
     let!(:item) { build(:item) }
     let!(:backup_user) { build(:user) }
+    let!(:order) { Order.new }
     
     before do
       item.user_id = another_user.id
@@ -100,6 +101,8 @@ RSpec.describe UsersController do
       backup_user.username = 'backup'
       backup_user.skip_confirmation!
       backup_user.save
+      order.user_id = another_user.id
+      order.save
     end
     
     context 'unsigned_in_user' do
@@ -132,6 +135,7 @@ RSpec.describe UsersController do
       it "should let backup_user to take over the user's items" do
         delete :erase, params: { id: another_user.reload.id }
         expect(backup_user.reload.items[0]).to eq item
+        expect(backup_user.reload.orders[0]).to eq order
       end
     end
   end

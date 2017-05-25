@@ -25,9 +25,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # DELETE /resource
   def destroy
     items = current_user.items
+    orders = current_user.orders
     backup_user = User.find_by(username: 'backup')
+    
     items.each do |item|
       item.update_attributes(user_id: backup_user.id)
+    end
+    
+    orders.each do |order|
+      order.update_attributes(user_id: backup_user.id)
     end
     
     super
