@@ -8,6 +8,11 @@ module PageObjects
         visit "/categories/#{category.id}"
       end
       
+      def select_a_item(item)
+        click_link "#{item.title}"
+        PageObjects::Items::Show.new
+      end
+      
     end
   end
 end

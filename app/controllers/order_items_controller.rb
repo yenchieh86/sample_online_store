@@ -33,7 +33,11 @@ class OrderItemsController < ApplicationController
     
     if params[:order_item][:quantity].to_i == 0
       if order_item.destroy
-        if order.save
+        if order.order_items.count == 0
+          order.destroy
+          flash[:success] = 'Your order has been deleted.'
+          redirect_to user_orders_url(current_user)
+        elsif order.save
           flash[:success] = 'Your order has been deleted.'
           redirect_to order_url(order)
         else
@@ -75,11 +79,17 @@ class OrderItemsController < ApplicationController
     order = Order.find(order_item.order_id)
     
     update_order_data(order, order_item, '-=')
-    order.save
     
     if order_item.destroy
-      flash[:success] = 'Order has been updated.'
-      redirect_to order_url(order)
+      if order.order_items.count == 0
+        order.destroy
+        flash[:success] = 'Your order has been deleted.'
+        redirect_to user_orders_url(current_user)
+      else
+        order.save
+        flash[:success] = 'Order has been updated.'
+        redirect_to order_url(order)
+      end
     else
       update_order_data(order, order_item, '+=')
       order.save
@@ -123,6 +133,7 @@ class OrderItemsController < ApplicationController
         order.total_dimensions -= order_item.total_dimensions
         order.order_items_total -= order_item.total_amount
         order.shipping -= order_item.shipping
+        order.order_total_amount = order.order_items_total * ( 1.0 + order.tax) + order.shipping
       end
     end
     
@@ -147,5 +158,6 @@ class OrderItemsController < ApplicationController
                            total_amount: old_data[:total_amount], total_dimensions: old_data[:total_dimensions],
                            shipping: old_data[:shipping])
     end
+    
 end
 

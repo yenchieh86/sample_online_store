@@ -54,7 +54,7 @@
       <% end %>
     </tr>
     <% @order.order_items.each_with_index do |order_item, index| %>
-      <tr>
+      <tr class='order_item_<%= order_item.id %>'>
         <td>
           <%= index + 1 %>
         </td>

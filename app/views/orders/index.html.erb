@@ -41,14 +41,14 @@
           </th>
         </tr>
         <% @user.orders.reverse.each_with_index do |order, index| %>
-          <tr>
-            <td>
+          <tr class='order_id_<%= order.id %>'>
+            <td class='index'>
               <%= index + 1 %>
             </td>
             <td>
               <%= order_status_text_for_order_index(order) %>
             </td>
-            <td>
+            <td class='order_item_quantity'>
               <%= link_to order.order_items_count, order_path(order), class: "btn btn-default btn-xs btn-block" %>
             </td>
             <% if current_user.admin? %>
@@ -59,16 +59,16 @@
                 <%= order.total_dimensions %>
               </td>
             <% end %>
-            <td>
+            <td class='order_items_total'>
               <%= order.order_items_total %>
             </td>
             <td>
               <%= order.tax %>
             </td>
-            <td>
+            <td class='shipping'>
               <%= order.shipping %>
             </td>
-            <td>
+            <td class='order_total_amount'>
               <%= order.order_total_amount %>
             </td>
             <td>

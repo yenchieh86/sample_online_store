@@ -60,7 +60,7 @@ RSpec.describe OrderItemsController do
         expect(standard_user_order.reload.shipping).to eq old_data[:shipping] + item.shipping
         expect(standard_user_order.reload.total_weight).to eq old_data[:total_weight] + item.weight
         expect(standard_user_order.reload.order_items_total).to eq old_data[:order_items_total] + item.price
-        expect(standard_user_order.reload.order_total_amount).to eq old_data[:order_items_total] + item.price * (1 + standard_user_order.tax)
+        expect(standard_user_order.reload.order_total_amount).to eq old_data[:order_items_total] + item.shipping + item.price * (1 + standard_user_order.tax)
         expect(standard_user_order.reload.total_dimensions).to eq (item.length * item.width * item.height + old_data[:total_dimensions]).round(2)
       end
     end
@@ -132,8 +132,10 @@ RSpec.describe OrderItemsController do
       
       it 'should delete the order_item if order_item quantity is 0' do
         order_item_count = OrderItem.count
+        order_count = Order.count
         expect { patch :update, params: { id: order_item.reload.id, order_item: { quantity: 0 } } }.to change { standard_user_order.order_items.count }.by(-1)
         expect(OrderItem.count).to eq order_item_count - 1
+        expect(Order.count).to eq order_count - 1
       end
       
       it "should not able to change other people's order_item" do
@@ -174,6 +176,7 @@ RSpec.describe OrderItemsController do
   
   describe 'DELETE #destroy' do
     let!(:order_item) { standard_user_order.order_items.create }
+    let!(:order_item2) { standard_user_order.order_items.create }
     let!(:admin_order_item) { admin_order.order_items.create }
     
     context 'unsigned_in_user' do
@@ -191,6 +194,14 @@ RSpec.describe OrderItemsController do
         expect { delete :destroy, params: { id: order_item.reload.id } }.to change { OrderItem.count }.by(-1)
         expect(response).to redirect_to order_url(standard_user_order)
         expect(flash[:success]).to eq 'Order has been updated.'
+      end
+      
+      it 'should destroy the order' do
+        standard_user_order.order_items.delete_all
+        @new_order_item = standard_user_order.order_items.create
+        expect { delete :destroy, params: { id: @new_order_item.reload.id } }.to change { standard_user_order.order_items.count }.by(-1)
+        expect(response).to redirect_to user_orders_url(standard_user)
+        expect(flash[:success]).to eq 'Your order has been deleted.'
       end
       
       it 'should redirect_to root_url' do

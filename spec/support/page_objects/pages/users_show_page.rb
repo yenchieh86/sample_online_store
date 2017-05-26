@@ -25,6 +25,7 @@ module PageObjects
       
       def order_list
         click_link 'Order List'
+        PageObjects::Orders::Index.new
       end
       
       def new_item

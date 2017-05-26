@@ -30,6 +30,7 @@ FactoryGirl.define do
     length '1.11'
     width '1.11'
     height '1.11'
+    shipping '1.11'
     user nil
     category nil
     sold 0
