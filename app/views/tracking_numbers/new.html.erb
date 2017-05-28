@@ -3,9 +3,5 @@
     <h3>Enter Tracking Number</h3>
   </div>
 </div>
-<div class='row'>
-  <%= bootstrap_form_tag url: "/orders/#{params[:order_id]}/tracking_numbers" do |f| %>
-    <%= f.text_field :tracking_number %>
-    <%= f.submit 'Save' %>
-  <% end %>
-</div>
+
+<%= render 'form', url: "/orders/#{params[:order_id]}/tracking_numbers", method: :post %>

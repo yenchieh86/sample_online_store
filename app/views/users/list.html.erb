@@ -12,11 +12,13 @@
             <th class='col-md-1'>NO.</th>
             <th class='col-md-2'>Username</th>
             <th class='col-md-1'>Post Item</th>
-            <th class='col-md-1'>All Orders</th>
+            <th class='col-md-1'>Unpaid Order</th>
             <th class='col-md-1'>Unshipped Order</th>
+            <th class='col-md-1'>Unreceived Order</th>
             <th class='col-md-1'>Finished Order</th>
             <th class='col-md-1'>Unfinished Order Amount</th>
             <th class='col-md-1'>Finished Order Amount</th>
+            <th class='col-md-1'>All Orders</th>
             <th class='col-md-1'>Setting</th>
           </tr>
           <% @users.each_with_index do |user, index| %>
@@ -35,17 +37,16 @@
                 <% end %>
               </td>
               <td>
-                <% if user.orders_count == nil %>
-                  0
-                <% else %>
-                  <%= link_to user.orders_count, user_orders_path(user) %>
-                <% end %>
+                <%= user.orders.select { |order| order.status == 'unpaid' }.count %>
               </td>
               <td>
-                <%= user.orders.all.select { |order| order.status == 'unshipped' }.count %>
+                <%= user.orders.select { |order| order.status == 'unshipped' }.count %>
               </td>
               <td>
-                <%= user.orders.all.select { |order| order.status == 'finished' }.count %>
+                <%= user.orders.select { |order| order.status == 'unreceived' }.count %>
+              </td>
+              <td>
+                <%= user.orders.select { |order| order.status == 'finished' }.count %>
               </td>
               <td>
                  <%= total_spent(user, 'finished', 0) %>
@@ -54,10 +55,47 @@
                  <%= total_spent(user, 'finished', 1) %>
               </td>
               <td>
+                <% if user.orders_count == nil %>
+                  0
+                <% else %>
+                  <%= link_to user.orders_count, user_orders_path(user) %>
+                <% end %>
+              </td>
+              <td>
                 <%= link_to 'Delete', erase_user_path(user), method: :delete, class: 'btn btn-danger btn-sm' %>
               </td>
             </tr>
           <% end %>
+        </table>
+        <table class="table table-bordered text-center">
+          <tr>
+            <th>
+              Total User
+            </th>
+            <th>
+             Total Unshipped  Order #
+            </th>
+            <th>
+              Total Unreceived   Order #
+            </th>
+            <th>
+              Total Finished Order #
+            </th>
+          </tr>
+          <tr>
+            <td class='col-md-3'>
+              <%= @orders.select { |order| order.status == 'unpaid' }.count %>
+            </td>
+            <td class='col-md-3'>
+              <%= @orders.select { |order| order.status == 'unshipped' }.count %>
+            </td>
+            <td class='col-md-3'>
+              <%= @orders.select { |order| order.status == 'unreceived' }.count %>
+            </td>
+            <td class='col-md-3'>
+              <%= @orders.select { |order| order.status == 'finished' }.count %>
+            </td>
+          </tr>
         </table>
       </div>
     </div>

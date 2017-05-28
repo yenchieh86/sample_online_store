@@ -46,7 +46,7 @@
               <%= index + 1 %>
             </td>
             <td>
-              <%= order_status_text_for_order_index(order) %>
+              <%= order_status(order) %>
             </td>
             <td class='order_item_quantity'>
               <%= link_to order.order_items_count, order_path(order), class: "btn btn-default btn-xs btn-block" %>
@@ -78,7 +78,7 @@
                 <%= link_to 'Show Destination', order_shipping_information_path(order, order.shipping_information), class: "btn btn-default btn-xs btn-block" %>
               <% end %>
               
-              <% if order.order_total_amount > 0 && order.status == 'unpaid'%>
+              <% if order.order_total_amount > 0 && order.order_items_count > 0 && order.status == 'unpaid'%>
                 <%= link_to 'Make the Payment',new_order_charge_path(order), class: "btn btn-primary btn-xs btn-block" %> 
               <% end %>
               
@@ -90,9 +90,10 @@
                 <% end %>
               <% end %>
               
-              <% if order.status == 'unreceived' || order.status == 'finished' %>
-                <%= link_to 'Track Package', order_tracking_number_path(order, order.shipping_information), class: "btn btn-default btn-xs btn-block" %>
+              <% if order.status == 'unreceived' %>
+                <%= link_to 'Received',received_order_path(order), method: :patch, class: "btn btn-primary btn-xs btn-block" %> 
               <% end %>
+              
             </td>
           </tr>
         <% end %>

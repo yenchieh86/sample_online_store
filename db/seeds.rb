@@ -1,6 +1,9 @@
+ShippingInformation.delete_all
+Order.delete_all
 Item.delete_all
 Category.delete_all
 User.delete_all
+StoreActivity.delete_all
 
 admin_1 = User.new(username: ENV["ADMIN_1_USERNAME"], email: ENV["ADMIN_1_EMAIL"], password: ENV["ADMIN_1_PASSWORD"],
                    password_confirmation: ENV["ADMIN_1_PASSWORD"], role: 'admin')

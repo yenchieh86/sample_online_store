@@ -17,7 +17,7 @@ class ChargesController < ApplicationController
                                    currency: 'usd')
     if charge.paid?
       order.update(status: 'unshipped')
-      flash[:success] = 'Thank you. You can track your package after we send it.'
+      flash[:success] = 'Thank you. You can track your package through "Destination show page" after we send it.'
       redirect_to user_orders_path(current_user)
     else
       flash[:alert] = 'The payment is not complete.'
@@ -34,7 +34,7 @@ class ChargesController < ApplicationController
   
     def check_order_total_amount!
       order = Order.find(params[:order_id])
-      unless order.order_total_amount > 0.00
+      unless order.order_total_amount > 0.00 || order.order_items_count > 0
         flash[:alert] = "You don't have any item in this order yet."
         redirect_to order_url(order)
       end

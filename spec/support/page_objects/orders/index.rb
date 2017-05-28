@@ -19,6 +19,10 @@ module PageObjects
         PageObjects::ShippingInformations::Show.new
       end
       
+      def make_the_payment(order)
+        order_list_table(order).click_link 'Make the Payment'
+      end
+      
       private
       
         def order_list_table(order)

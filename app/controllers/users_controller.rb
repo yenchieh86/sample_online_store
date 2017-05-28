@@ -11,7 +11,8 @@ class UsersController < ApplicationController
   
   def list
     if current_user.admin?
-      @users = User.all
+      @users = User.includes(:orders).all
+      @orders = Order.all
     else
       flash[:alert] = 'You can not access to user list page.'
       redirect_to root_url

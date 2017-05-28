@@ -60,8 +60,10 @@
   </div>
   <div class='col-md-2'>
     <% if @shipping_information.order.unpaid? %>
-    <%= link_to 'Change Destination', edit_order_shipping_information_path(@shipping_information.order, @shipping_information), class: "btn btn-default btn-block" %>
-  <% end %>
+      <%= link_to 'Change Destination', edit_order_shipping_information_path(@shipping_information.order, @shipping_information), class: "btn btn-default btn-block" %>
+    <% elsif @shipping_information.order.unreceived? || @shipping_information.order.finished? %>
+      <%= link_to 'Track Package', order_tracking_number_path(@shipping_information.order, @shipping_information), class: "btn btn-default btn-block" %>
+    <% end %>
   </div>
   
   

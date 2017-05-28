@@ -30,7 +30,8 @@ module ApplicationHelper
     n
   end
   
-  def order_status_text_for_order_index(order)
+  # order show page
+  def order_status(order)
     case order.status
       when 'unpaid'
         order.status

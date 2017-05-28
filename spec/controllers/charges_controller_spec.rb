@@ -34,6 +34,25 @@ RSpec.describe ChargesController do
       expect(response).to redirect_to order_url(order)
     end
   end
+  
+  describe 'POST #create' do
+    let!(:customer) { double(:customer, id: 1) }
+    let!(:charge) { double(:charge, paid?: true) }
+    before do
+      Stripe::Customer.stub(:create).and_return(customer)
+      Stripe::Charge.stub(:create).and_return(charge)
+      sign_in standard_user
+      order.create_shipping_information!
+      order.order_items.create
+    end
+    
+    it 'should change order status' do
+      expect(order.status).to eq 'unpaid'
+      post :create, params: { order_id: order.id, stripeEmail: 'test@example.com', stripeToken: '111' }
+      expect(order.reload.status).to eq 'unshipped'
+      
+    end
+  end
 end
 
 

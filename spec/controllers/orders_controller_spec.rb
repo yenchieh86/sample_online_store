@@ -108,4 +108,49 @@ RSpec.describe OrdersController do
       end
     end
   end
+  
+  describe 'PATCH #receive' do
+    context 'unsigned_in_user' do
+      it 'should redirect_to new_user_session_url' do
+        patch :receive, params: { id: standard_user_order.id }
+        expect(response).to redirect_to new_user_session_url
+        expect(flash[:alert]).to eq 'You need to sign in or sign up before continuing.'
+      end
+    end
+    
+    context 'standard_user' do
+      before { sign_in standard_user }
+      
+      it "should able to access it's own order" do
+        patch :receive, params: { id: standard_user_order.id }
+        expect(response).to redirect_to user_orders_path(standard_user)
+        expect(flash[:success]).to eq 'Thank you for shopping.'
+        expect(standard_user_order.reload.status).to eq 'finished'
+      end
+      
+      it "should not able to access other user's order" do
+        patch :receive, params: { id: admin_order.reload.id }
+        expect(response).to redirect_to user_show_url(standard_user)
+        expect(flash[:alert]).to eq "You can't access to other user's order."
+      end
+    end
+    
+    context 'admin' do
+      before { sign_in admin }
+      
+      it "should able to access it's own order" do
+        patch :receive, params: { id: admin_order.reload.id }
+        expect(response).to redirect_to user_orders_path(admin)
+        expect(flash[:success]).to eq 'Thank you for shopping.'
+        expect(admin_order.reload.status).to eq 'finished'
+      end
+      
+      it "should not able to access other user's order" do
+        patch :receive, params: { id: standard_user_order.reload.id }
+        expect(response).to redirect_to user_orders_path(standard_user)
+        expect(flash[:success]).to eq 'Thank you for shopping.'
+        expect(standard_user_order.reload.status).to eq 'finished'
+      end
+    end
+  end
 end

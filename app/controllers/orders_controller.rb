@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
+  before_action :check_user!, only: [:show, :receive]
   
   def index
     if current_user.admin?
@@ -11,16 +12,24 @@ class OrdersController < ApplicationController
 
   def show
     @order = Order.includes(:user, :order_items).find(params[:id])
-    
-    if current_user.admin?
-      @order
-    else
-      if @order.user_id != current_user.id
+  end
+  
+  def receive
+    order = Order.includes(:user, :order_items).find(params[:id])
+    order.update(status: 'finished')
+    flash[:success] = 'Thank you for shopping.'
+    redirect_to user_orders_url(order.user)
+  end
+  
+  private
+  
+    def check_user!
+      order = Order.includes(:user).find(params[:id])
+      
+      unless current_user == order.user || current_user.admin?
         flash[:alert] = "You can't access to other user's order."
         redirect_to user_show_url(current_user)
-      else
-        @order
       end
     end
-  end
+    
 end
