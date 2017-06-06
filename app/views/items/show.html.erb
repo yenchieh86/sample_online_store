@@ -32,7 +32,15 @@
         <h4><%= render 'order_items/new_order_item', item: @item %></h4>
       <% end %>
       <h4><strong>Description: </strong></h4>
-      <h5><%= @item.description %></h5>
+      <% if @descriptions.empty? %>
+        <h5>THere's no description for this product.</h5>
+      <% else %>
+        <% @descriptions.each_with_index do |description, index| %>
+          <% if index > 0 %>
+            <h5>- <%= description %></h5>
+          <% end %>
+        <% end %>
+      <% end %>
     </div>
   </div>
 </div>

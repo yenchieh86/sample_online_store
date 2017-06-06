@@ -34,7 +34,7 @@
             </td>
             <td>
               <% if item.pictures.any? %>
-                <%= image_tag(order_item.item.pictures[0].url, size: '100x100', class: 'img-responsive center-block') %>
+                <%= image_tag(item.pictures[0].url, size: '100x100', class: 'img-responsive center-block') %>
               <% else %>
                 <%= image_tag('no_uploaded.png', size: '100x100', class: 'img-responsive center-block') %>
               <% end %>
