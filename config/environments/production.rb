@@ -57,7 +57,7 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "online_store_#{Rails.env}"
   config.action_mailer.perform_caching = false
   
-  config.action_mailer.default_url_options = { host: "https://yen-sample-online-store.herokuapp.com/" }
+  config.action_mailer.default_url_options = { host: "https://kimberlys-one-stop-shop.herokuapp.com/" }
   
   config.action_mailer.delivery_method = :smtp
   
