@@ -2,7 +2,7 @@
 
 Help my client Kimberly to create her online shop
 
-* Used Ruby on Rails to create an eCommerce store with a shopping cart system, a dropdown menu, infinite scrolling, and a Stripe payment system
+* Used Ruby on Rails to create an eCommerce store with a shopping cart system, a dropdown menu, and a Stripe payment system
 
 * Used Carrierwave, fog, AWS S3 to upload photos of the products and USPS API to include the ability to check mailing addresses 
 
