@@ -1,24 +1,11 @@
-# README
+# Kimberly's One Stop Shop
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Help my client Kimberly to create her online shop
 
-Things you may want to cover:
+* Used Ruby on Rails to create an eCommerce store with a shopping cart system, a dropdown menu, infinite scrolling, and a Stripe payment system
 
-* Ruby version
+* Used Carrierwave, fog, AWS S3 to upload photos of the products and USPS API to include the ability to check mailing addresses 
 
-* System dependencies
+* Maintain the functionality of the store by debugging any reported issues and designing new features to make the store more user friendly
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+[Website](https://kimberlys-one-stop-shop.herokuapp.com/)
