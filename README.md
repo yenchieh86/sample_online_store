@@ -9,3 +9,7 @@ Help my client Kimberly to create her online shop
 * Maintain the functionality of the store by debugging any reported issues and designing new features to make the store more user friendly
 
 [Website](https://kimberlys-one-stop-shop.herokuapp.com/)
+
+Screenshots
+-----------
+![Imgur](https://s3.amazonaws.com/poly-screenshots.angel.co/Project/a6/486455/db26f4bbd20f8ce04e4ab2d8b5612b76-original.jpg)
